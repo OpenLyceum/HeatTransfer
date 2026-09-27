@@ -80,7 +80,7 @@ Useful query parameters:
 | [Vite](https://vite.dev/) | ^8 | Build tool and dev server |
 | [TypeScript](https://www.typescriptlang.org/) | ^7 | `erasableSyntaxOnly`, `verbatimModuleSyntax` |
 | [Biome](https://biomejs.dev/) | ^2.5 | Linting and formatting |
-| [Vitest](https://vitest.dev/) | ^4 | Unit tests (happy-dom) |
+| [Vitest](https://vitest.dev/) | ^5 | Unit tests (happy-dom) |
 | [vite-plugin-pwa](https://vite-pwa-org.netlify.app/) | ^1 | PWA / offline / installable |
 
 The physics and numerics are documented in [`doc/model.md`](doc/model.md); the
