@@ -8,6 +8,7 @@
  */
 
 import { describe, expect, it } from "vitest";
+import { HeatTransferModel } from "../src/combined/model/HeatTransferModel.js";
 import { CpuFieldEngine } from "../src/common/field/cpu/CpuFieldEngine.js";
 import {
   BoundaryCondition,
@@ -17,28 +18,13 @@ import {
 } from "../src/common/field/FieldTypes.js";
 import { SimulationDomain } from "../src/common/field/SimulationDomain.js";
 import { FieldSimulationModel } from "../src/common/model/FieldSimulationModel.js";
+import { ConductionModel } from "../src/conduction/model/ConductionModel.js";
+import { ConvectionModel } from "../src/convection/model/ConvectionModel.js";
 import { FIELD_VIEW_SIZE } from "../src/HeatTransferConstants.js";
-
-/**
- * Force garbage collection with multiple passes. When `earlyExitRefs` is supplied
- * the loop bails as soon as every referenced object is confirmed collected. The
- * setTimeout(0) yield after a live deref() avoids the WeakRef macrotask-liveness pin.
- * Without early-exit refs the loop always runs all passes, which on a slow `gc()`
- * can exceed the Vitest testTimeout — always pass refs when you have them.
- */
-async function forceGC(earlyExitRefs?: WeakRef<object> | readonly WeakRef<object>[]): Promise<void> {
-  const refs = earlyExitRefs === undefined ? [] : Array.isArray(earlyExitRefs) ? earlyExitRefs : [earlyExitRefs];
-  for (let i = 0; i < 15; i++) {
-    globalThis.gc?.();
-    await new Promise<void>((r) => setTimeout(r, 50));
-    if (refs.length > 0 && refs.every((ref) => ref.deref() === undefined)) {
-      return;
-    }
-    if (refs.length > 0) {
-      await new Promise<void>((r) => setTimeout(r, 0));
-    }
-  }
-}
+import { MaterialsModel } from "../src/materials/model/MaterialsModel.js";
+import { HeatTransferPreferencesModel } from "../src/preferences/HeatTransferPreferencesModel.js";
+import { TemperatureModel } from "../src/temperature/model/TemperatureModel.js";
+import { describeDisposalLeaks, forceGC } from "./helpers/memoryLeak.js";
 
 /**
  * A field engine holds several megabytes of typed arrays and a canvas, so it is
@@ -81,16 +67,6 @@ function createAndDisposeFieldSimulationModel(): WeakRef<object> {
 }
 
 describe("Memory leak regression", () => {
-  it("global.gc is available (--expose-gc)", () => {
-    expect(globalThis.gc).toBeDefined();
-  });
-
-  it("sanity: plain object is collected", async () => {
-    const ref = (() => new WeakRef({ hello: "world" }))();
-    await forceGC(ref);
-    expect(ref.deref()).toBeUndefined();
-  });
-
   it("CpuFieldEngine is collected after dispose", async () => {
     const ref = createAndDisposeFieldEngine();
     await forceGC(ref);
@@ -121,3 +97,11 @@ describe("Memory leak regression", () => {
     expect(survivors).toBe(0);
   });
 });
+
+describeDisposalLeaks([
+  { name: "HeatTransferModel", create: () => new HeatTransferModel(new HeatTransferPreferencesModel()) },
+  { name: "ConductionModel", create: () => new ConductionModel(new HeatTransferPreferencesModel()) },
+  { name: "ConvectionModel", create: () => new ConvectionModel(new HeatTransferPreferencesModel()) },
+  { name: "MaterialsModel", create: () => new MaterialsModel(new HeatTransferPreferencesModel()) },
+  { name: "TemperatureModel", create: () => new TemperatureModel(new HeatTransferPreferencesModel()) },
+]);
