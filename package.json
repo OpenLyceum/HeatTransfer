@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "description": "A SceneryStack simulation: Heat Transfer.",
+  "description": "Explore heat as a field: temperature, conduction, convection and materials, computed on the GPU with WebGPU.",
   "license": "AGPL-3.0-or-later",
   "repository": {
     "type": "git",
