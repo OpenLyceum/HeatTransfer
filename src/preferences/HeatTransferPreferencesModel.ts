@@ -1,8 +1,9 @@
 /**
  * HeatTransferPreferencesModel.ts
  *
- * Simulation-specific preferences, shown in Preferences → Simulation. Initial
- * values come from the matching query parameters.
+ * Model for the simulation-specific preferences shown in Preferences →
+ * Simulation. Each preference Property takes its initial value from the
+ * corresponding query parameter in heatTransferQueryParameters.
  *
  * Resolution is a preference rather than an in-screen control on purpose: it
  * changes how much GPU memory the fields occupy and how much work a frame is, so
