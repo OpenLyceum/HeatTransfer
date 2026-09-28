@@ -3,7 +3,9 @@
 Sim-specific context for AI assistants. General SceneryStack guidance:
 [OpenLyceum/.github/AGENTS.md](https://github.com/OpenLyceum/.github/blob/main/AGENTS.md).
 
-## What this sim is
+## Project
+
+### What this sim is
 
 Heat as a field, on a WebGPU field engine. The governing equation is
 
@@ -16,7 +18,7 @@ with terms switched on screen by screen. Physics and numerics:
 [`doc/implementation-notes.md`](doc/implementation-notes.md). **Read
 implementation-notes before changing anything under `src/common/field/`.**
 
-## The one rule to keep
+### The one rule to keep
 
 > The temperature field is GPU-native data, not a Scenery-rendered image that
 > happens to contain a field.
@@ -61,7 +63,7 @@ Concretely, three invariants are worth defending:
 | `src/common/HeatTransferScreenIcons.ts` | Programmatic screen icons |
 | **Screens** | `src/{temperature,conduction,convection,combined,materials}/` |
 
-## Screens
+### Screens
 
 | Folder | Class prefix | Adds |
 |---|---|---|
@@ -75,25 +77,9 @@ The combined screen's folder is `combined/` while its classes are `HeatTransfer*
 so that `HeatTransferScreen` does not collide with the sim-level `HeatTransfer*`
 files at `src/` root.
 
-## Things that will bite you
+## Model
 
-- **Backend selection is asynchronous exactly once.** `initializeGpuContext()` runs
-  in `main.ts` before `sim.start()`. Everything after it is synchronous, because
-  SceneryStack builds a screen's model lazily and synchronously. Do not make
-  `createFieldEngine` async.
-- **Explicit bind group layouts, never `layout: "auto"`.** 32-bit float textures
-  can only be bound as `unfilterable-float`; an inferred layout asks for a
-  filterable float and fails on most hardware.
-- **Uniform block sizes are hand-computed.** The `*_PARAMS_BYTES` constants beside
-  each shader must match the WGSL struct's actual size under `vec4`'s 16-byte
-  alignment. Getting this wrong produces garbage, not an error.
-- **`FieldScreenView` sets `pdomOrder` on a wrapper node.** `ScreenView` throws if
-  you set it on itself, and a node listed twice throws too — the probe checkbox is
-  already inside `layerPanel.checkboxes`.
-- **The temperature ramp is not themed.** Overlay colours follow the colour profile
-  via `FieldRenderStyle`; the ramp itself must not, or the legend would lie.
-- **Node 24 is the fleet version.** `npm install` on Node 22 warns about
-  `engines.node` but works; CI uses 24.
+Physics and behavior: `doc/model.md`.
 
 ## Accessibility
 
@@ -195,3 +181,25 @@ npm run lint && npm run check && npm run build && npm test
 Useful while developing: `?forceCpu=true` to compare backends on one machine,
 `?resolution=large` to check the field engine at 1024², `?screens=N` to open one
 screen directly.
+
+## Development notes
+
+### Things that will bite you
+
+- **Backend selection is asynchronous exactly once.** `initializeGpuContext()` runs
+  in `main.ts` before `sim.start()`. Everything after it is synchronous, because
+  SceneryStack builds a screen's model lazily and synchronously. Do not make
+  `createFieldEngine` async.
+- **Explicit bind group layouts, never `layout: "auto"`.** 32-bit float textures
+  can only be bound as `unfilterable-float`; an inferred layout asks for a
+  filterable float and fails on most hardware.
+- **Uniform block sizes are hand-computed.** The `*_PARAMS_BYTES` constants beside
+  each shader must match the WGSL struct's actual size under `vec4`'s 16-byte
+  alignment. Getting this wrong produces garbage, not an error.
+- **`FieldScreenView` sets `pdomOrder` on a wrapper node.** `ScreenView` throws if
+  you set it on itself, and a node listed twice throws too — the probe checkbox is
+  already inside `layerPanel.checkboxes`.
+- **The temperature ramp is not themed.** Overlay colours follow the colour profile
+  via `FieldRenderStyle`; the ramp itself must not, or the legend would lie.
+- **Node 24 is the fleet version.** `npm install` on Node 22 warns about
+  `engines.node` but works; CI uses 24.
