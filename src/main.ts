@@ -1,17 +1,15 @@
 /**
  * main.ts
  *
- * Entry point. Initializes SceneryStack, acquires the GPU device, creates the
+ * Entry point for the simulation. Initializes SceneryStack, creates the
  * screens, and starts the main event loop.
  *
  * !! CRITICAL IMPORT ORDER !!
- * brand.js MUST be the first import. Each module imports the next, so the import
- * nesting is
+ * brand.js MUST be the first import. Each module imports the next, so the import nesting is
  *
  *   main → brand → splash → assert → init
  *
- * and therefore the actual EXECUTION order (deepest import runs first) is the
- * reverse:
+ * and therefore the actual EXECUTION order (deepest import runs first) is the reverse:
  *
  *   init → assert → splash → brand → main
  *
@@ -106,6 +104,7 @@ onReadyToLaunch(() => {
         },
       }),
 
+      // Optional: fill in credits shown in Help → About
       credits: {
         leadDesign: "",
         softwareDevelopment: "",
