@@ -13,11 +13,12 @@
  * part, which is then substituted into a translated pattern.
  */
 
+import { StringUtils } from "scenerystack/phetcommon";
 import { KELVIN_TO_CELSIUS_OFFSET } from "../../HeatTransferConstants.js";
 
 /** Degrees Celsius, to one decimal place. */
 export function formatCelsius(kelvin: number): string {
-  return (kelvin - KELVIN_TO_CELSIUS_OFFSET).toFixed(1);
+  return StringUtils.toFixedLTR(kelvin - KELVIN_TO_CELSIUS_OFFSET, 1);
 }
 
 /** Degrees Celsius, rounded to a whole number, for summaries and axis ticks. */
@@ -31,9 +32,9 @@ export function formatConductivity(conductivity: number): string {
     return Math.round(conductivity).toString();
   }
   if (conductivity >= 0.1) {
-    return conductivity.toFixed(2);
+    return StringUtils.toFixedLTR(conductivity, 2);
   }
-  return conductivity.toFixed(3);
+  return StringUtils.toFixedLTR(conductivity, 3);
 }
 
 /** Thermal diffusivity in m^2/s, always in scientific notation with two figures. */
@@ -43,12 +44,12 @@ export function formatDiffusivity(diffusivity: number): string {
   }
   const exponent = Math.floor(Math.log10(diffusivity));
   const mantissa = diffusivity / 10 ** exponent;
-  return `${mantissa.toFixed(1)} × 10${superscript(exponent)}`;
+  return `${StringUtils.toFixedLTR(mantissa, 1)} × 10${superscript(exponent)}`;
 }
 
 /** Speed in millimetres per second, since the flow speeds here are a few mm/s. */
 export function formatSpeed(metresPerSecond: number): string {
-  return (metresPerSecond * 1000).toFixed(1);
+  return StringUtils.toFixedLTR(metresPerSecond * 1000, 1);
 }
 
 /**
@@ -60,7 +61,7 @@ export function formatPeclet(peclet: number): string {
     return "∞";
   }
   if (peclet < 10) {
-    return peclet.toFixed(1);
+    return StringUtils.toFixedLTR(peclet, 1);
   }
   if (peclet < 1000) {
     return Math.round(peclet).toString();
@@ -71,7 +72,7 @@ export function formatPeclet(peclet: number): string {
 /** Elapsed simulated time. Seconds below a minute, then minutes and seconds. */
 export function formatElapsed(seconds: number): string {
   if (seconds < 60) {
-    return seconds.toFixed(1);
+    return StringUtils.toFixedLTR(seconds, 1);
   }
   const minutes = Math.floor(seconds / 60);
   return `${minutes}:${Math.floor(seconds % 60)
@@ -87,14 +88,14 @@ export function formatFlux(wattsPerSquareMetre: number): string {
     return Math.round(kilowatts).toString();
   }
   if (magnitude >= 1) {
-    return kilowatts.toFixed(1);
+    return StringUtils.toFixedLTR(kilowatts, 1);
   }
-  return kilowatts.toFixed(2);
+  return StringUtils.toFixedLTR(kilowatts, 2);
 }
 
 /** Distance along the cross-section, in millimetres. */
 export function formatMillimetres(metres: number): string {
-  return (metres * 1000).toFixed(0);
+  return StringUtils.toFixedLTR(metres * 1000, 0);
 }
 
 /** Renders an integer exponent with Unicode superscript digits. */

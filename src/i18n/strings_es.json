@@ -78,7 +78,9 @@
     "showFlux": "Mostrar flujo"
   },
   "legend": {
-    "title": "Temperatura"
+    "title": "Temperatura",
+    "unit": "°C",
+    "tick": "{{value}}"
   },
   "keyboardHelp": {
     "title": "Pintar sobre el campo",

@@ -10,7 +10,8 @@
  * see the range narrow as the plate equilibrates without reading a number.
  */
 
-import { DerivedProperty, type TReadOnlyProperty } from "scenerystack/axon";
+import { DerivedProperty, PatternStringProperty, type TReadOnlyProperty } from "scenerystack/axon";
+import { toFixed } from "scenerystack/dot";
 import { Shape } from "scenerystack/kite";
 import { LinearGradient, Node, type NodeOptions, Path, Rectangle, Text } from "scenerystack/scenery";
 import { PhetFont } from "scenerystack/scenery-phet";
@@ -72,12 +73,16 @@ export class TemperatureLegendNode extends Node {
       tickShape.moveTo(BAR_WIDTH, y).lineTo(BAR_WIDTH + 5, y);
 
       const kelvin = MIN_TEMPERATURE_K + fraction * (MAX_TEMPERATURE_K - MIN_TEMPERATURE_K);
-      const label = new Text(`${Math.round(kelvin - KELVIN_TO_CELSIUS_OFFSET)}`, {
-        font: new PhetFont(SMALL_FONT_SIZE),
-        fill: HeatTransferColors.secondaryTextColorProperty,
-        left: BAR_WIDTH + 8,
-        centerY: y,
-      });
+      const celsius = Math.round(kelvin - KELVIN_TO_CELSIUS_OFFSET);
+      const label = new Text(
+        new PatternStringProperty(strings.getLegend().tickStringProperty, { value: toFixed(celsius, 0) }),
+        {
+          font: new PhetFont(SMALL_FONT_SIZE),
+          fill: HeatTransferColors.secondaryTextColorProperty,
+          left: BAR_WIDTH + 8,
+          centerY: y,
+        },
+      );
       this.addChild(label);
     }
     this.addChild(
@@ -98,7 +103,7 @@ export class TemperatureLegendNode extends Node {
     });
     this.addChild(title);
 
-    const unit = new Text("°C", {
+    const unit = new Text(strings.getLegend().unitStringProperty, {
       font: new PhetFont(SMALL_FONT_SIZE),
       fill: HeatTransferColors.secondaryTextColorProperty,
       centerX: BAR_WIDTH / 2,

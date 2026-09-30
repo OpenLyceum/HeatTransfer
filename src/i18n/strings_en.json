@@ -78,7 +78,9 @@
     "showFlux": "Show flux"
   },
   "legend": {
-    "title": "Temperature"
+    "title": "Temperature",
+    "unit": "°C",
+    "tick": "{{value}}"
   },
   "keyboardHelp": {
     "title": "Paint on the field",

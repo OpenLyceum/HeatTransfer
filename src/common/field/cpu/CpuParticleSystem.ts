@@ -14,6 +14,7 @@
  * backends look the same.
  */
 
+import { dotRandom } from "scenerystack/dot";
 import { PARTICLE_LIFETIME_S } from "../../../HeatTransferConstants.js";
 import type { SimulationDomain } from "../SimulationDomain.js";
 
@@ -38,13 +39,13 @@ export class CpuParticleSystem {
   /** Scatters every particle and randomizes its remaining life. */
   public reset(): void {
     for (let n = 0; n < this.count; n++) {
-      this.respawn(n, Math.random() * PARTICLE_LIFETIME_S);
+      this.respawn(n, dotRandom.nextDoubleBetween(0, PARTICLE_LIFETIME_S));
     }
   }
 
   private respawn(n: number, life: number): void {
-    this.positions[2 * n] = Math.random();
-    this.positions[2 * n + 1] = Math.random();
+    this.positions[2 * n] = dotRandom.nextDouble();
+    this.positions[2 * n + 1] = dotRandom.nextDouble();
     this.ages[n] = life;
   }
 

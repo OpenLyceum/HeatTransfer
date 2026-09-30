@@ -13,7 +13,7 @@
  */
 
 import { DerivedProperty, PatternStringProperty } from "scenerystack/axon";
-import { Range } from "scenerystack/dot";
+import { Range, toFixed } from "scenerystack/dot";
 import { type Node, VBox } from "scenerystack/scenery";
 import { MATERIAL_ORDER, type MaterialIdValue } from "../../common/field/Materials.js";
 import { HeatTransferPanel } from "../../common/HeatTransferPanel.js";
@@ -66,7 +66,7 @@ export class MaterialsScreenView extends FieldScreenView {
 
     const anisotropyReadout = new PatternStringProperty(strings.getReadouts().ratioStringProperty, {
       value: new DerivedProperty([model.field.anisotropyProperty], (ratio) =>
-        ratio >= 1 ? `${ratio.toFixed(2)} : 1` : `1 : ${(1 / ratio).toFixed(2)}`,
+        ratio >= 1 ? `${toFixed(ratio, 2)} : 1` : `1 : ${toFixed(1 / ratio, 2)}`,
       ),
     });
 

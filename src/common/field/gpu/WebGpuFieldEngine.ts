@@ -28,6 +28,7 @@
  * well as to the texture, so painting still feels instant.
  */
 
+import { dotRandom } from "scenerystack/dot";
 import {
   AMBIENT_TEMPERATURE_K,
   FLUX_ARROW_COUNT,
@@ -459,10 +460,10 @@ export class WebGpuFieldEngine extends FieldEngineBase {
   private uploadParticles(): void {
     const data = new Float32Array(PARTICLE_COUNT * PARTICLE_STRIDE);
     for (let n = 0; n < PARTICLE_COUNT; n++) {
-      data[PARTICLE_STRIDE * n] = Math.random();
-      data[PARTICLE_STRIDE * n + 1] = Math.random();
-      data[PARTICLE_STRIDE * n + 2] = Math.random() * PARTICLE_LIFETIME_S;
-      data[PARTICLE_STRIDE * n + 3] = Math.random();
+      data[PARTICLE_STRIDE * n] = dotRandom.nextDouble();
+      data[PARTICLE_STRIDE * n + 1] = dotRandom.nextDouble();
+      data[PARTICLE_STRIDE * n + 2] = dotRandom.nextDouble() * PARTICLE_LIFETIME_S;
+      data[PARTICLE_STRIDE * n + 3] = dotRandom.nextDouble();
     }
     this.device.queue.writeBuffer(this.particleBuffer, 0, data);
   }
