@@ -319,6 +319,12 @@ steps, space or enter paints — shown as a crosshair whenever the field has foc
 exactly as the hover ring is shown to a pointer user. `HeatBrushKeyboardHelpSection`
 documents it in the keyboard-help dialog.
 
+## Object lifetime
+
+Screen models and screen views (including the screen-summary content) are created once and live as
+long as the sim, so their links and derived Properties are never unlinked and those classes have no
+`dispose()`. The memory-leak suite covers the five models' `dispose()`.
+
 ## Testing
 
 WebGPU is not available under Vitest, so the suites exercise the CPU kernels and

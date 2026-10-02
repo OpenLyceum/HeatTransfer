@@ -15,12 +15,24 @@ import { type Node, Text, VBox } from "scenerystack/scenery";
 import { PhetFont } from "scenerystack/scenery-phet";
 import { RectangularRadioButtonGroup, type RectangularRadioButtonGroupItem } from "scenerystack/sun";
 import HeatTransferColors from "../../HeatTransferColors.js";
-import { LABEL_FONT_SIZE, MAX_BRUSH_RADIUS_FRACTION, MIN_BRUSH_RADIUS_FRACTION } from "../../HeatTransferConstants.js";
+import {
+  CONTROL_PANEL_WIDTH,
+  LABEL_FONT_SIZE,
+  MAX_BRUSH_RADIUS_FRACTION,
+  MIN_BRUSH_RADIUS_FRACTION,
+} from "../../HeatTransferConstants.js";
 import HeatTransferNamespace from "../../HeatTransferNamespace.js";
 import { StringManager } from "../../i18n/StringManager.js";
-import { HeatTransferPanel, type HeatTransferPanelOptions } from "../HeatTransferPanel.js";
+import { HeatTransferPanel, type HeatTransferPanelOptions, PANEL_X_MARGIN } from "../HeatTransferPanel.js";
 import { BrushMode, type BrushModeId, type FieldSimulationModel } from "../model/FieldSimulationModel.js";
 import { labelledSlider, panelTitle } from "./ControlFactory.js";
+
+/** Brush-mode button row: gap between buttons, and their side margins, px. */
+const BUTTON_SPACING = 8;
+const BUTTON_X_MARGIN = 16;
+const MATERIAL_MODE_BUTTON_X_MARGIN = 6;
+/** Room left for the selected-button stroke on both sides, px. */
+const BUTTON_STROKE_ALLOWANCE = 4;
 
 export class BrushControlPanel extends HeatTransferPanel {
   /** The interactive children, in traversal order, for the ScreenView's `pdomOrder`. */
@@ -41,34 +53,42 @@ export class BrushControlPanel extends HeatTransferPanel {
     const controls = strings.getControls();
     const a11y = strings.getSharedA11yStrings();
 
+    // The buttons share one row inside a panel of CONTROL_PANEL_WIDTH, so each
+    // label gets an equal share of it; a longer translation scales down rather
+    // than widening the panel into the next control column.
+    const buttonCount = includeMaterialMode ? 3 : 2;
+    const buttonXMargin = includeMaterialMode ? MATERIAL_MODE_BUTTON_X_MARGIN : BUTTON_X_MARGIN;
+    const rowWidth = CONTROL_PANEL_WIDTH - 2 * PANEL_X_MARGIN - (buttonCount - 1) * BUTTON_SPACING;
+    const labelMaxWidth = rowWidth / buttonCount - 2 * buttonXMargin - BUTTON_STROKE_ALLOWANCE;
+
     const modeItems: RectangularRadioButtonGroupItem<BrushModeId>[] = [
       {
         value: BrushMode.HEAT,
-        createNode: () => radioLabel(controls.heatStringProperty),
+        createNode: () => radioLabel(controls.heatStringProperty, labelMaxWidth),
         options: { accessibleName: controls.heatStringProperty },
       },
       {
         value: BrushMode.COOL,
-        createNode: () => radioLabel(controls.coolStringProperty),
+        createNode: () => radioLabel(controls.coolStringProperty, labelMaxWidth),
         options: { accessibleName: controls.coolStringProperty },
       },
     ];
     if (includeMaterialMode) {
       modeItems.push({
         value: BrushMode.MATERIAL,
-        createNode: () => radioLabel(controls.paintMaterialStringProperty),
+        createNode: () => radioLabel(controls.paintMaterialStringProperty, labelMaxWidth),
         options: { accessibleName: controls.paintMaterialStringProperty },
       });
     }
 
     const modeGroup = new RectangularRadioButtonGroup<BrushModeId>(model.brushModeProperty, modeItems, {
       orientation: "horizontal",
-      spacing: 8,
+      spacing: BUTTON_SPACING,
       accessibleName: controls.brushStringProperty,
       accessibleHelpText: a11y.controls.brushModeStringProperty,
       radioButtonOptions: {
         baseColor: HeatTransferColors.controlSurfaceColorProperty,
-        xMargin: includeMaterialMode ? 8 : 16,
+        xMargin: buttonXMargin,
         yMargin: 6,
         buttonAppearanceStrategyOptions: {
           selectedStroke: HeatTransferColors.accentColorProperty,
@@ -99,10 +119,11 @@ export class BrushControlPanel extends HeatTransferPanel {
 }
 
 /** A radio-button label, drawn on the white control surface. */
-function radioLabel(label: Parameters<typeof panelTitle>[0]): Text {
+function radioLabel(label: Parameters<typeof panelTitle>[0], maxWidth: number): Text {
   return new Text(label, {
     font: new PhetFont({ size: LABEL_FONT_SIZE, weight: "bold" }),
     fill: HeatTransferColors.controlSurfaceTextColorProperty,
+    maxWidth: maxWidth,
   });
 }
 

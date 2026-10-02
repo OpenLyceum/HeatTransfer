@@ -68,7 +68,8 @@
     "range": "de {{min}} à {{max}} °C",
     "conductionDominates": "La conduction domine",
     "flowDominates": "L'écoulement domine",
-    "comparable": "Comparables"
+    "comparable": "Comparables",
+    "elapsedMinutes": "t = {{minutes}} min {{seconds}} s"
   },
   "graph": {
     "title": "Le long de la coupe",
@@ -91,7 +92,7 @@
   "preferences": {
     "title": "Simulation",
     "resolution": "Résolution de la grille",
-    "resolutionHelp": "Les grilles plus fines révèlent davantage de structure et sollicitent plus le GPU. L'effet s'applique au rechargement d'un écran.",
+    "resolutionHelp": "Les grilles plus fines révèlent davantage de structure et sollicitent plus le GPU. L'effet s'applique après le rechargement de la page.",
     "resolutionClassroom": "128 × 128 (classe)",
     "resolutionHigh": "512 × 512 (élevée)",
     "resolutionLarge": "1024 × 1024 (grande)",

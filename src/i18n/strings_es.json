@@ -68,7 +68,8 @@
     "range": "de {{min}} a {{max}} °C",
     "conductionDominates": "Domina la conducción",
     "flowDominates": "Domina el flujo",
-    "comparable": "Comparables"
+    "comparable": "Comparables",
+    "elapsedMinutes": "t = {{minutes}} min {{seconds}} s"
   },
   "graph": {
     "title": "A lo largo de la sección",
@@ -91,7 +92,7 @@
   "preferences": {
     "title": "Simulación",
     "resolution": "Resolución de la malla",
-    "resolutionHelp": "Las mallas más finas resuelven más estructura y exigen más trabajo a la GPU. Se aplica al recargar una pantalla.",
+    "resolutionHelp": "Las mallas más finas resuelven más estructura y exigen más trabajo a la GPU. Se aplica al recargar la página.",
     "resolutionClassroom": "128 × 128 (aula)",
     "resolutionHigh": "512 × 512 (alta)",
     "resolutionLarge": "1024 × 1024 (grande)",

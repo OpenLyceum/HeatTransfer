@@ -68,7 +68,8 @@
     "range": "{{min}} to {{max}} °C",
     "conductionDominates": "Conduction dominates",
     "flowDominates": "Flow dominates",
-    "comparable": "Comparable"
+    "comparable": "Comparable",
+    "elapsedMinutes": "t = {{minutes}} min {{seconds}} s"
   },
   "graph": {
     "title": "Along the cross-section",
@@ -91,7 +92,7 @@
   "preferences": {
     "title": "Simulation",
     "resolution": "Grid Resolution",
-    "resolutionHelp": "Finer grids resolve more structure and need more GPU work. Takes effect when a screen is reloaded.",
+    "resolutionHelp": "Finer grids resolve more structure and need more GPU work. Takes effect after the page is reloaded.",
     "resolutionClassroom": "128 × 128 (classroom)",
     "resolutionHigh": "512 × 512 (high)",
     "resolutionLarge": "1024 × 1024 (large)",

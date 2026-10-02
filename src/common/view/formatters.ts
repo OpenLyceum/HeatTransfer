@@ -69,17 +69,6 @@ export function formatPeclet(peclet: number): string {
   return `${Math.round(peclet / 100) / 10}k`;
 }
 
-/** Elapsed simulated time. Seconds below a minute, then minutes and seconds. */
-export function formatElapsed(seconds: number): string {
-  if (seconds < 60) {
-    return StringUtils.toFixedLTR(seconds, 1);
-  }
-  const minutes = Math.floor(seconds / 60);
-  return `${minutes}:${Math.floor(seconds % 60)
-    .toString()
-    .padStart(2, "0")}`;
-}
-
 /** Heat flux in kW/m^2, to two significant-ish figures. */
 export function formatFlux(wattsPerSquareMetre: number): string {
   const kilowatts = wattsPerSquareMetre / 1000;

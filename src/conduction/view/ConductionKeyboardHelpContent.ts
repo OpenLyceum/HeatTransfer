@@ -9,6 +9,7 @@
 
 import {
   BasicActionsKeyboardHelpSection,
+  ComboBoxKeyboardHelpSection,
   MoveDraggableItemsKeyboardHelpSection,
   SliderControlsKeyboardHelpSection,
   TwoColumnKeyboardHelpContent,
@@ -23,7 +24,7 @@ export class ConductionKeyboardHelpContent extends TwoColumnKeyboardHelpContent 
         new MoveDraggableItemsKeyboardHelpSection(),
         new SliderControlsKeyboardHelpSection(),
       ],
-      [new BasicActionsKeyboardHelpSection({ withCheckboxContent: true })],
+      [new ComboBoxKeyboardHelpSection(), new BasicActionsKeyboardHelpSection({ withCheckboxContent: true })],
     );
   }
 }

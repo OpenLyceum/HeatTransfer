@@ -13,6 +13,7 @@
  */
 
 import { DerivedProperty, PatternStringProperty } from "scenerystack/axon";
+import { StringUtils } from "scenerystack/phetcommon";
 import { HBox, type NodeOptions, Text } from "scenerystack/scenery";
 import { PhetFont } from "scenerystack/scenery-phet";
 import HeatTransferColors from "../../HeatTransferColors.js";
@@ -21,7 +22,8 @@ import HeatTransferNamespace from "../../HeatTransferNamespace.js";
 import { StringManager } from "../../i18n/StringManager.js";
 import { FieldBackend } from "../field/FieldEngine.js";
 import type { FieldSimulationModel } from "../model/FieldSimulationModel.js";
-import { formatElapsed } from "./formatters.js";
+
+const SECONDS_PER_MINUTE = 60;
 
 export class FieldStatusNode extends HBox {
   public constructor(model: FieldSimulationModel, providedOptions?: NodeOptions) {
@@ -37,9 +39,18 @@ export class FieldStatusNode extends HBox {
       height: model.effectiveResolution,
     });
 
-    const elapsedLabel = new PatternStringProperty(readouts.elapsedStringProperty, {
-      value: new DerivedProperty([model.elapsedTimeProperty], (seconds) => formatElapsed(seconds)),
-    });
+    // Seconds below a minute ("t = 42.0 s"), then minutes and seconds
+    // ("t = 1 min 35 s"), each from its own pattern so the unit always matches.
+    const elapsedLabel = new DerivedProperty(
+      [model.elapsedTimeProperty, readouts.elapsedStringProperty, readouts.elapsedMinutesStringProperty],
+      (seconds, secondsPattern, minutesPattern) =>
+        seconds < SECONDS_PER_MINUTE
+          ? StringUtils.fillIn(secondsPattern, { value: StringUtils.toFixedLTR(seconds, 1) })
+          : StringUtils.fillIn(minutesPattern, {
+              minutes: Math.floor(seconds / SECONDS_PER_MINUTE),
+              seconds: Math.floor(seconds % SECONDS_PER_MINUTE),
+            }),
+    );
 
     const style = {
       font: new PhetFont(SMALL_FONT_SIZE),

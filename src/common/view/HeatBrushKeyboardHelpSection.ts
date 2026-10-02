@@ -14,18 +14,24 @@
 import { KeyboardHelpIconFactory, KeyboardHelpSection, KeyboardHelpSectionRow } from "scenerystack/scenery-phet";
 import HeatTransferNamespace from "../../HeatTransferNamespace.js";
 import { StringManager } from "../../i18n/StringManager.js";
+import HeatTransferHotkeyData from "./HeatTransferHotkeyData.js";
 
 export class HeatBrushKeyboardHelpSection extends KeyboardHelpSection {
   public constructor() {
     const help = StringManager.getInstance().getKeyboardHelp();
 
+    // Rows come from the same HotkeyData as FieldNode's listener; the icons are
+    // given explicitly so each row reads as one compact group of keys.
     super(help.titleStringProperty, [
-      KeyboardHelpSectionRow.labelWithIcon(help.moveCursorStringProperty, KeyboardHelpIconFactory.arrowKeysRowIcon()),
-      KeyboardHelpSectionRow.labelWithIcon(
-        help.moveCursorSlowerStringProperty,
-        KeyboardHelpIconFactory.shiftPlusIcon(KeyboardHelpIconFactory.arrowKeysRowIcon()),
-      ),
-      KeyboardHelpSectionRow.labelWithIcon(help.paintStringProperty, KeyboardHelpIconFactory.spaceOrEnter()),
+      KeyboardHelpSectionRow.fromHotkeyData(HeatTransferHotkeyData.MOVE_CURSOR, {
+        icon: KeyboardHelpIconFactory.arrowKeysRowIcon(),
+      }),
+      KeyboardHelpSectionRow.fromHotkeyData(HeatTransferHotkeyData.MOVE_CURSOR_SLOWER, {
+        icon: KeyboardHelpIconFactory.shiftPlusIcon(KeyboardHelpIconFactory.arrowKeysRowIcon()),
+      }),
+      KeyboardHelpSectionRow.fromHotkeyData(HeatTransferHotkeyData.PAINT, {
+        icon: KeyboardHelpIconFactory.spaceOrEnter(),
+      }),
     ]);
   }
 }

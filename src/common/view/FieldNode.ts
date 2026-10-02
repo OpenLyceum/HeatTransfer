@@ -40,6 +40,7 @@ import HeatTransferColors from "../../HeatTransferColors.js";
 import { FIELD_VIEW_SIZE } from "../../HeatTransferConstants.js";
 import HeatTransferNamespace from "../../HeatTransferNamespace.js";
 import type { FieldSimulationModel } from "../model/FieldSimulationModel.js";
+import HeatTransferHotkeyData from "./HeatTransferHotkeyData.js";
 
 /** Fraction of the field the keyboard cursor moves per arrow-key press. */
 const KEYBOARD_STEP = 0.05;
@@ -160,17 +161,10 @@ export class FieldNode extends Node {
 
       this.addInputListener(
         new KeyboardListener({
-          keys: [
-            "arrowLeft",
-            "arrowRight",
-            "arrowUp",
-            "arrowDown",
-            "shift+arrowLeft",
-            "shift+arrowRight",
-            "shift+arrowUp",
-            "shift+arrowDown",
-            "space",
-            "enter",
+          keyStringProperties: [
+            ...HeatTransferHotkeyData.MOVE_CURSOR.keyStringProperties,
+            ...HeatTransferHotkeyData.MOVE_CURSOR_SLOWER.keyStringProperties,
+            ...HeatTransferHotkeyData.PAINT.keyStringProperties,
           ],
           fire: (_event, keysPressed) => {
             this.handleKey(keysPressed);

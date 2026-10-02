@@ -31,6 +31,9 @@ import { Panel, type PanelOptions } from "scenerystack/sun";
 import HeatTransferColors from "../HeatTransferColors.js";
 import { PANEL_CORNER_RADIUS } from "../HeatTransferConstants.js";
 
+/** Horizontal inner margin of every control panel, px. */
+export const PANEL_X_MARGIN = 12;
+
 export type HeatTransferPanelOptions = PanelOptions;
 
 export class HeatTransferPanel extends Panel {
@@ -40,7 +43,7 @@ export class HeatTransferPanel extends Panel {
         fill: HeatTransferColors.panelBackgroundColorProperty,
         stroke: HeatTransferColors.panelBorderColorProperty,
         cornerRadius: PANEL_CORNER_RADIUS,
-        xMargin: 12,
+        xMargin: PANEL_X_MARGIN,
         yMargin: 10,
       },
       providedOptions,
