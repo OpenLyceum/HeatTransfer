@@ -39,6 +39,17 @@ function makeConfig(overrides?: Partial<FieldSimulationConfig>): FieldSimulation
 }
 
 describe("FieldSimulationModel", () => {
+  it("does not integrate zero or negative frame durations", () => {
+    const model = new FieldSimulationModel(makeConfig());
+    model.paintAt(0.5, 0.5);
+    const temperature = model.engine.sampleTemperature(0.5, 0.5);
+    model.step(0);
+    model.step(-1);
+    expect(model.elapsedTimeProperty.value).toBe(0);
+    expect(model.engine.sampleTemperature(0.5, 0.5)).toBe(temperature);
+    model.dispose();
+  });
+
   it("falls back to the CPU backend when there is no GPU device", () => {
     const model = new FieldSimulationModel(makeConfig());
     expect(model.backend).toBe(FieldBackend.CPU);

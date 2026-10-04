@@ -365,7 +365,10 @@ export class FieldSimulationModel implements TModel {
   }
 
   private advance(dt: number): void {
-    const clamped = Math.min(Math.max(dt, 0), MAX_FRAME_DT);
+    if (dt <= 0 || !Number.isFinite(dt)) {
+      return;
+    }
+    const clamped = Math.min(dt, MAX_FRAME_DT);
     const speedFactor = this.timeSpeedProperty.value === TimeSpeed.SLOW ? SLOW_SPEED_FACTOR : 1;
 
     // Scale the substep budget by how long the frame actually was, so the
