@@ -201,5 +201,5 @@ screen directly.
   already inside `layerPanel.checkboxes`.
 - **The temperature ramp is not themed.** Overlay colours follow the colour profile
   via `FieldRenderStyle`; the ramp itself must not, or the legend would lie.
-- **Node 24 is the fleet version.** `npm install` on Node 22 warns about
-  `engines.node` but works; CI uses 24.
+- **Node 26 is the fleet version.** `devEngines` makes npm refuse to install or
+  run scripts on an older Node; CI uses 26.
