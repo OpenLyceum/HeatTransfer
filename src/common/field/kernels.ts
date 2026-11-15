@@ -51,6 +51,7 @@ export type MaterialArrays = {
  * Reads a cell, resolving out-of-range indices according to the boundary
  * condition. This single function is why the three boundary conditions need no
  * ghost-cell bookkeeping anywhere else.
+ * @internal Exported for unit tests; not part of the application API.
  */
 export function fetchCell(
   field: Float32Array,
@@ -247,6 +248,7 @@ export function gradientAt(
  * The two components use their own directional conductivities, so an anisotropic
  * material bends the flux away from the steepest-descent direction — which is
  * the whole point of the anisotropy control.
+ * @internal Exported for unit tests; not part of the application API.
  */
 export function heatFluxAt(
   field: Float32Array,
@@ -301,7 +303,10 @@ export function stableTimeStep(
   return Number.isFinite(dt) ? dt : 1;
 }
 
-/** Total thermal energy per unit depth, in J/m — the quantity insulated boundaries conserve. */
+/**
+ * Total thermal energy per unit depth, in J/m — the quantity insulated boundaries conserve.
+ * @internal Exported for unit tests; not part of the application API.
+ */
 export function totalEnergy(field: Float32Array, geometry: FieldGeometry, material: MaterialArrays): number {
   const cellVolume = geometry.dx * geometry.dy;
   let sum = 0;

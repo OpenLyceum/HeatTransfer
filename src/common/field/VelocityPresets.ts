@@ -24,7 +24,7 @@ import { FlowPreset, type FlowPresetId } from "./FieldTypes.js";
 const VORTEX_CORE_RADIUS = 0.22;
 
 /** A dimensionless velocity direction with |v| <= 1. */
-export type UnitVelocity = { vx: number; vy: number };
+type UnitVelocity = { vx: number; vy: number };
 
 /**
  * Evaluates a preset at a point in the unit square.
@@ -32,6 +32,7 @@ export type UnitVelocity = { vx: number; vy: number };
  * @param preset - which analytic field to evaluate
  * @param u - horizontal position in [0, 1]
  * @param v - vertical position in [0, 1], increasing downward
+ * @internal Exported for unit tests; not part of the application API.
  */
 export function evaluateFlowPreset(preset: FlowPresetId, u: number, v: number): UnitVelocity {
   switch (preset) {
