@@ -24,7 +24,7 @@ import { ARROW_RENDER_SHADER, FIELD_RENDER_SHADER, PARTICLE_RENDER_SHADER } from
 import { requestCanvasContext, requestWebGpuContext, type WebGpuContext } from "./WebGpuSupport.js";
 
 /** Why the simulation is not using the GPU, when it is not. */
-export const GpuUnavailableReason = {
+const GpuUnavailableReason = {
   /** The browser has no `navigator.gpu`, or no adapter/device could be acquired. */
   NO_DEVICE: "noDevice",
   /** A shader failed to compile on this device. */
@@ -35,7 +35,7 @@ export const GpuUnavailableReason = {
   FORCED: "forced",
 } as const;
 
-export type GpuUnavailableReasonId = (typeof GpuUnavailableReason)[keyof typeof GpuUnavailableReason];
+type GpuUnavailableReasonId = (typeof GpuUnavailableReason)[keyof typeof GpuUnavailableReason];
 
 export type GpuInitializationResult = {
   context: WebGpuContext | null;

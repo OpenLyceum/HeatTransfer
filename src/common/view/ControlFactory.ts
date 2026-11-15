@@ -26,7 +26,7 @@ import HeatTransferNamespace from "../../HeatTransferNamespace.js";
 import { HEAT_TRANSFER_COMBO_BOX_OPTIONS } from "../HeatTransferButtonOptions.js";
 
 /** Usable content width inside a control panel. */
-export const CONTENT_WIDTH = CONTROL_PANEL_WIDTH - 30;
+const CONTENT_WIDTH = CONTROL_PANEL_WIDTH - 30;
 
 /** Slider track dimensions shared by every slider in the sim. */
 const SLIDER_TRACK = new Dimension2(CONTENT_WIDTH - 10, 4);
@@ -41,7 +41,7 @@ export function panelTitle(label: TReadOnlyProperty<string>): Text {
 }
 
 /** An ordinary control label on the panel fill. */
-export function panelLabel(label: TReadOnlyProperty<string>): Text {
+function panelLabel(label: TReadOnlyProperty<string>): Text {
   return new Text(label, {
     font: new PhetFont(LABEL_FONT_SIZE),
     fill: HeatTransferColors.textColorProperty,
@@ -59,7 +59,7 @@ export function panelReadout(label: TReadOnlyProperty<string>): Text {
 }
 
 /** A combo-box item label, drawn on the white control surface. */
-export function comboBoxLabel(label: TReadOnlyProperty<string>): Text {
+function comboBoxLabel(label: TReadOnlyProperty<string>): Text {
   return new Text(label, {
     font: new PhetFont(LABEL_FONT_SIZE),
     fill: HeatTransferColors.controlSurfaceTextColorProperty,

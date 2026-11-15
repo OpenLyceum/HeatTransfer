@@ -22,7 +22,7 @@ const BOUNDARY_PERIODIC: u32 = 2u;
 `;
 
 /** The uniform block every compute pass reads. Must match `SIM_PARAMS_BYTES`. */
-export const WGSL_SIM_PARAMS = `
+const WGSL_SIM_PARAMS = `
 struct SimParams {
   gridSize: vec2<u32>,
   cellSize: vec2<f32>,
@@ -118,7 +118,7 @@ fn bilinearScalar(
  *
  * Channels are (k_x, k_y, rho c_p, unused).
  */
-export const WGSL_SAMPLE_MATERIAL = `
+const WGSL_SAMPLE_MATERIAL = `
 fn fetchMaterial(tex: texture_2d<f32>, coord: vec2<i32>, size: vec2<i32>) -> vec4<f32> {
   let clamped = clamp(coord, vec2<i32>(0, 0), size - vec2<i32>(1, 1));
   return textureLoad(tex, clamped, 0);

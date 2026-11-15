@@ -129,11 +129,11 @@ export const MAX_TEMPERATURE_K = 453.15;
 /** Offset between kelvin and degrees Celsius. */
 export const KELVIN_TO_CELSIUS_OFFSET = 273.15;
 
-/** Temperature deposited by the heat brush at full strength, in kelvin. */
-export const HOT_BRUSH_TEMPERATURE_K = MAX_TEMPERATURE_K;
+/** Temperature deposited by the heat brush at full strength, in kelvin (matches MAX_TEMPERATURE_K). */
+export const HOT_BRUSH_TEMPERATURE_K = 453.15;
 
-/** Temperature deposited by the cool brush at full strength, in kelvin. */
-export const COOL_BRUSH_TEMPERATURE_K = MIN_TEMPERATURE_K;
+/** Temperature deposited by the cool brush at full strength, in kelvin (matches MIN_TEMPERATURE_K). */
+export const COOL_BRUSH_TEMPERATURE_K = 253.15;
 
 /** Spacing between isotherm contour lines, in kelvin. */
 export const ISOTHERM_INTERVAL_K = 10;

@@ -23,7 +23,7 @@
 import HeatTransferNamespace from "../../HeatTransferNamespace.js";
 import type { MaterialProperties } from "./FieldTypes.js";
 
-export const MaterialId = {
+const MaterialId = {
   COPPER: "copper",
   ALUMINUM: "aluminum",
   STEEL: "steel",

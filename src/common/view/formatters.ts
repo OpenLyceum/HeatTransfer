@@ -69,24 +69,6 @@ export function formatPeclet(peclet: number): string {
   return `${Math.round(peclet / 100) / 10}k`;
 }
 
-/** Heat flux in kW/m^2, to two significant-ish figures. */
-export function formatFlux(wattsPerSquareMetre: number): string {
-  const kilowatts = wattsPerSquareMetre / 1000;
-  const magnitude = Math.abs(kilowatts);
-  if (magnitude >= 100) {
-    return Math.round(kilowatts).toString();
-  }
-  if (magnitude >= 1) {
-    return StringUtils.toFixedLTR(kilowatts, 1);
-  }
-  return StringUtils.toFixedLTR(kilowatts, 2);
-}
-
-/** Distance along the cross-section, in millimetres. */
-export function formatMillimetres(metres: number): string {
-  return StringUtils.toFixedLTR(metres * 1000, 0);
-}
-
 /** Renders an integer exponent with Unicode superscript digits. */
 function superscript(exponent: number): string {
   const digits = "⁰¹²³⁴⁵⁶⁷⁸⁹";

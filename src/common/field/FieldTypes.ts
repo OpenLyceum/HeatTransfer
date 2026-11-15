@@ -206,7 +206,7 @@ export const TEMPERATURE_ONLY_LAYERS: LayerVisibility = {
 };
 
 /** The layer ids in the order they are listed in the UI. */
-export const LAYER_ORDER: readonly (keyof LayerVisibility)[] = [
+const LAYER_ORDER: readonly (keyof LayerVisibility)[] = [
   "temperature",
   "isotherms",
   "heatFlux",

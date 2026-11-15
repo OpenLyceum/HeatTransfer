@@ -389,7 +389,7 @@ export abstract class FieldEngineBase implements FieldEngine {
 }
 
 /** The temperature an initial condition prescribes at a unit-square point, in kelvin. */
-export function initialTemperatureAt(initial: InitialConditionId, u: number, v: number): number {
+function initialTemperatureAt(initial: InitialConditionId, u: number, v: number): number {
   switch (initial) {
     case InitialCondition.HOT_SPOT: {
       const r2 = (u - 0.5) ** 2 + (v - 0.5) ** 2;
