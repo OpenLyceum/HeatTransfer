@@ -88,8 +88,8 @@ export class SimulationDomain {
 
   /** Row-major index of cell (i, j), with indices clamped into the grid. */
   public clampedIndex(i: number, j: number): number {
-    const ci = i < 0 ? 0 : i > this.gridWidth - 1 ? this.gridWidth - 1 : i;
-    const cj = j < 0 ? 0 : j > this.gridHeight - 1 ? this.gridHeight - 1 : j;
+    const ci = i < 0 ? 0 : Math.min(i, this.gridWidth - 1);
+    const cj = j < 0 ? 0 : Math.min(j, this.gridHeight - 1);
     return cj * this.gridWidth + ci;
   }
 
@@ -108,8 +108,8 @@ export class SimulationDomain {
     const i = Math.floor(u * this.gridWidth);
     const j = Math.floor(v * this.gridHeight);
     return {
-      i: i < 0 ? 0 : i > this.gridWidth - 1 ? this.gridWidth - 1 : i,
-      j: j < 0 ? 0 : j > this.gridHeight - 1 ? this.gridHeight - 1 : j,
+      i: i < 0 ? 0 : Math.min(i, this.gridWidth - 1),
+      j: j < 0 ? 0 : Math.min(j, this.gridHeight - 1),
     };
   }
 
