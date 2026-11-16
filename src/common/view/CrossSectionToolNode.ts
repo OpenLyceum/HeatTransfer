@@ -38,11 +38,8 @@ export class CrossSectionToolNode extends Node {
 
     const line = new Path(null, {
       stroke: HeatTransferColors.crossSectionColorProperty,
-      lineWidth: CROSS_SECTION_TOOL_NODE_SETTINGS.LINE_LINE_WIDTH,
-      lineDash: [
-        CROSS_SECTION_TOOL_NODE_SETTINGS.LINE_LINE_DASH_DASH,
-        CROSS_SECTION_TOOL_NODE_SETTINGS.CONSTRUCTOR_LINE_LINE_DASH_DASH,
-      ],
+      lineWidth: CROSS_SECTION_TOOL_NODE_SETTINGS.LINE_WIDTH,
+      lineDash: [CROSS_SECTION_TOOL_NODE_SETTINGS.LINE_DASH, CROSS_SECTION_TOOL_NODE_SETTINGS.LINE_GAP],
       pickable: false,
     });
     this.addChild(line);

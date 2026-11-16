@@ -128,7 +128,7 @@ export class CrossSectionGraphNode extends Node {
 
     const title = panelReadout(graph.titleStringProperty);
     title.left = PLOT_MARGIN.left;
-    title.bottom = CROSS_SECTION_GRAPH_NODE_SETTINGS.BOTTOM_BOTTOM;
+    title.bottom = CROSS_SECTION_GRAPH_NODE_SETTINGS.TITLE_BOTTOM;
     this.addChild(title);
 
     const xAxisLabel = panelReadout(graph.distanceAxisStringProperty);

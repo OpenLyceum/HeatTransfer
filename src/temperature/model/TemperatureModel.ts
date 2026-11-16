@@ -18,11 +18,8 @@ import {
   TEMPERATURE_ONLY_LAYERS,
 } from "../../common/field/FieldTypes.js";
 import { FieldSimulationModel } from "../../common/model/FieldSimulationModel.js";
-import { FIELD_VIEW_SIZE, TEMPERATURE_MODEL_SETTINGS } from "../../HeatTransferConstants.js";
+import { CANVAS_SCALE, FIELD_VIEW_SIZE } from "../../HeatTransferConstants.js";
 import type { HeatTransferPreferencesModel } from "../../preferences/HeatTransferPreferencesModel.js";
-
-/** Backing-canvas resolution multiplier, so the field is crisp on high-DPI displays. */
-const CANVAS_SCALE: number = TEMPERATURE_MODEL_SETTINGS.CANVAS_SCALE;
 
 export class TemperatureModel implements TModel {
   public readonly field: FieldSimulationModel;

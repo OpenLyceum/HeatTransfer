@@ -183,11 +183,8 @@ export const READBACK_FRAME_INTERVAL = 4;
 /** Number of samples taken along the cross-section line. */
 export const CROSS_SECTION_SAMPLES = 128;
 
-/** Settings for combined/model/HeatTransferModel.ts. */
-export const HEAT_TRANSFER_MODEL_SETTINGS = {
-  /** Backing-canvas resolution multiplier, so the field is crisp on high-DPI displays. */
-  CANVAS_SCALE: 2,
-} as const;
+/** Backing-canvas resolution multiplier shared by every screen model (high-DPI crispness). */
+export const CANVAS_SCALE = 2;
 
 /** Settings for common/HeatTransferPanel.ts. */
 export const HEAT_TRANSFER_PANEL_SETTINGS = {
@@ -337,23 +334,25 @@ export const CROSS_SECTION_GRAPH_NODE_SETTINGS = {
   FLUX_CURVE_LINE_WIDTH: 1.5,
   /** Temperature curve line width (px). */
   TEMPERATURE_CURVE_LINE_WIDTH: 2,
-  /** Bottom bottom (px). */
-  BOTTOM_BOTTOM: -3,
+  /** Bottom inset for the graph title (px). */
+  TITLE_BOTTOM: -3,
   /** Y axis label right (px). */
   Y_AXIS_LABEL_RIGHT: 10,
 } as const;
 
 /** Settings for common/view/CrossSectionToolNode.ts. */
 export const CROSS_SECTION_TOOL_NODE_SETTINGS = {
-  LINE_LINE_DASH_DASH: 7, // px
-  CONSTRUCTOR_LINE_LINE_DASH_DASH: 4, // px
+  /** Cross-section line dash length (px). */
+  LINE_DASH: 7, // px
+  /** Cross-section line gap length (px). */
+  LINE_GAP: 4, // px
 
   /** Radius of a drag handle, in view coordinates. */
   HANDLE_RADIUS: 8,
   /** How far one keyboard drag step moves a handle, as a fraction of the field. */
   KEYBOARD_SCALE: 0.5,
-  /** Line line width (px). */
-  LINE_LINE_WIDTH: 2.5,
+  /** Cross-section line stroke width (px). */
+  LINE_WIDTH: 2.5,
   /** Handle line width (px). */
   HANDLE_LINE_WIDTH: 1.5,
 } as const;
@@ -389,7 +388,7 @@ export const FIELD_SCREEN_VIEW_SETTINGS = {
 
 /** Settings for common/view/FieldStatusNode.ts. */
 export const FIELD_STATUS_NODE_SETTINGS = {
-  /** Seconds per minute (px). */
+  /** Seconds per minute (s). */
   SECONDS_PER_MINUTE: 60,
   /** Constructor spacing (px). */
   CONSTRUCTOR_SPACING: 14,
@@ -465,16 +464,10 @@ export const TRANSPORT_CONTROL_PANEL_SETTINGS = {
   DECADES: 2,
   /** Peclet numbers above this read as flow-dominated. */
   ADVECTION_THRESHOLD: 100,
-  /** Balance default (px). */
+  /** Default conduction/advection balance slider position (dimensionless, 0–1). */
   BALANCE_DEFAULT: 0.5,
   /** Constructor spacing (px). */
   CONSTRUCTOR_SPACING: 8,
-} as const;
-
-/** Settings for conduction/model/ConductionModel.ts. */
-export const CONDUCTION_MODEL_SETTINGS = {
-  /** Backing-canvas resolution multiplier, so the field is crisp on high-DPI displays. */
-  CANVAS_SCALE: 2,
 } as const;
 
 /** Settings for conduction/view/ConductionScreenView.ts. */
@@ -483,18 +476,6 @@ export const CONDUCTION_SCREEN_VIEW_SETTINGS = {
   GRAPH_HEIGHT: 150,
   /** Tool panel spacing (px). */
   TOOL_PANEL_SPACING: 7,
-} as const;
-
-/** Settings for convection/model/ConvectionModel.ts. */
-export const CONVECTION_MODEL_SETTINGS = {
-  /** Backing-canvas resolution multiplier, so the field is crisp on high-DPI displays. */
-  CANVAS_SCALE: 2,
-} as const;
-
-/** Settings for materials/model/MaterialsModel.ts. */
-export const MATERIALS_MODEL_SETTINGS = {
-  /** Backing-canvas resolution multiplier, so the field is crisp on high-DPI displays. */
-  CANVAS_SCALE: 2,
 } as const;
 
 /** Settings for materials/view/MaterialsScreenView.ts. */
@@ -513,24 +494,18 @@ export const HEAT_TRANSFER_PREFERENCES_NODE_SETTINGS = {
   LABEL_SIZE: 14,
   /** Header font size (px). */
   HEADER_FONT_SIZE: 18,
-  /** Resolution radio buttons spacing (count). */
+  /** Resolution radio buttons spacing (px). */
   RESOLUTION_RADIO_BUTTONS_SPACING: 6,
-  /** Resolution radio buttons radius (count). */
+  /** Resolution radio buttons radius (px). */
   RESOLUTION_RADIO_BUTTONS_RADIUS: 7,
-  /** Resolution help font size (count). */
+  /** Resolution help font size (px). */
   RESOLUTION_HELP_FONT_SIZE: 11,
-  /** Resolution help max width (count). */
+  /** Resolution help max width (px). */
   RESOLUTION_HELP_MAX_WIDTH: 340,
   /** Status checkbox spacing (px). */
   STATUS_CHECKBOX_SPACING: 8,
   /** Constructor spacing (px). */
   CONSTRUCTOR_SPACING: 12,
-} as const;
-
-/** Settings for temperature/model/TemperatureModel.ts. */
-export const TEMPERATURE_MODEL_SETTINGS = {
-  /** Backing-canvas resolution multiplier, so the field is crisp on high-DPI displays. */
-  CANVAS_SCALE: 2,
 } as const;
 
 /** Settings for temperature/view/TemperatureScreenView.ts. */
@@ -557,6 +532,7 @@ HeatTransferNamespace.register("HeatTransferConstants", {
   ADVECTION_CFL,
   AMBIENT_TEMPERATURE_K,
   BRUSH_STRENGTH,
+  CANVAS_SCALE,
   CONTROL_AREA_WIDTH,
   CONTROL_COLUMN_LEFT,
   CONTROL_COLUMN_RIGHT,
