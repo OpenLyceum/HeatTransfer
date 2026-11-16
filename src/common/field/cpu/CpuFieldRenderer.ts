@@ -1,3 +1,4 @@
+import { CPU_FIELD_RENDERER_SETTINGS } from "../../../HeatTransferConstants.js";
 /**
  * CpuFieldRenderer.ts
  *
@@ -27,16 +28,16 @@ import type { SimulationDomain } from "../SimulationDomain.js";
 import type { CpuParticleSystem } from "./CpuParticleSystem.js";
 
 /** Entries in the colour lookup table built once per style change. */
-const COLOR_LUT_SIZE = 256;
+const COLOR_LUT_SIZE: number = CPU_FIELD_RENDERER_SETTINGS.COLOR_LUT_SIZE;
 
 /** How much of the way to white the gradient layer lifts a pixel at full strength. */
-const GRADIENT_LIFT = 0.55;
+const GRADIENT_LIFT: number = CPU_FIELD_RENDERER_SETTINGS.GRADIENT_LIFT;
 
 /** Opacity of the material tint overlay. */
-const MATERIAL_TINT_ALPHA = 0.35;
+const MATERIAL_TINT_ALPHA: number = CPU_FIELD_RENDERER_SETTINGS.MATERIAL_TINT_ALPHA;
 
 /** Radius of a tracer particle, in display pixels. */
-const PARTICLE_RADIUS = 1.6;
+const PARTICLE_RADIUS: number = CPU_FIELD_RENDERER_SETTINGS.PARTICLE_RADIUS;
 
 /** The colour a pixel starts from when the temperature layer is off. */
 const BLANK_COLOR = { red: 15, green: 18, blue: 31 } as const;

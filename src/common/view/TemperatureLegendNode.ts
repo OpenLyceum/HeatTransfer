@@ -1,3 +1,4 @@
+import { TEMPERATURE_LEGEND_NODE_SETTINGS } from "../../HeatTransferConstants.js";
 /**
  * TemperatureLegendNode.ts
  *
@@ -27,10 +28,10 @@ import { StringManager } from "../../i18n/StringManager.js";
 import { rgbToCss, TEMPERATURE_COLOR_STOPS } from "../field/ColorMap.js";
 
 /** Width of the colour bar, in view coordinates. */
-const BAR_WIDTH = 22;
+const BAR_WIDTH: number = TEMPERATURE_LEGEND_NODE_SETTINGS.BAR_WIDTH;
 
 /** Number of labelled ticks along the bar, including both ends. */
-const TICK_COUNT = 5;
+const TICK_COUNT: number = TEMPERATURE_LEGEND_NODE_SETTINGS.TICK_COUNT;
 
 export type TemperatureLegendNodeOptions = NodeOptions & {
   /** Height of the colour bar, in view coordinates. */
@@ -79,7 +80,7 @@ export class TemperatureLegendNode extends Node {
         {
           font: new PhetFont(SMALL_FONT_SIZE),
           fill: HeatTransferColors.secondaryTextColorProperty,
-          left: BAR_WIDTH + 8,
+          left: BAR_WIDTH + TEMPERATURE_LEGEND_NODE_SETTINGS.LABEL_LEFT_OFFSET,
           centerY: y,
         },
       );
@@ -97,9 +98,9 @@ export class TemperatureLegendNode extends Node {
     const title = new Text(strings.getLegend().titleStringProperty, {
       font: new PhetFont({ size: SMALL_FONT_SIZE, weight: "bold" }),
       fill: HeatTransferColors.textColorProperty,
-      maxWidth: 90,
+      maxWidth: TEMPERATURE_LEGEND_NODE_SETTINGS.TITLE_MAX_WIDTH,
       centerX: BAR_WIDTH / 2,
-      bottom: -6,
+      bottom: TEMPERATURE_LEGEND_NODE_SETTINGS.TITLE_BOTTOM,
     });
     this.addChild(title);
 
@@ -107,14 +108,18 @@ export class TemperatureLegendNode extends Node {
       font: new PhetFont(SMALL_FONT_SIZE),
       fill: HeatTransferColors.secondaryTextColorProperty,
       centerX: BAR_WIDTH / 2,
-      top: barHeight + 5,
+      top: barHeight + TEMPERATURE_LEGEND_NODE_SETTINGS.UNIT_TOP_OFFSET,
     });
     this.addChild(unit);
 
     // ── Live range markers ────────────────────────────────────────────────────
 
     const marker = (temperatureProperty: TReadOnlyProperty<number>): Node => {
-      const shape = new Shape().moveTo(-7, 0).lineTo(0, -4).lineTo(0, 4).close();
+      const shape = new Shape()
+        .moveTo(TEMPERATURE_LEGEND_NODE_SETTINGS.SHAPE_X, 0)
+        .lineTo(0, TEMPERATURE_LEGEND_NODE_SETTINGS.SHAPE_Y)
+        .lineTo(0, TEMPERATURE_LEGEND_NODE_SETTINGS.SHAPE_Y_SEGMENT_2)
+        .close();
       const node = new Path(shape, { fill: HeatTransferColors.textColorProperty });
       const positionProperty = new DerivedProperty([temperatureProperty], (kelvin) => {
         const fraction = (kelvin - MIN_TEMPERATURE_K) / (MAX_TEMPERATURE_K - MIN_TEMPERATURE_K);

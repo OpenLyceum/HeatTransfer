@@ -1,3 +1,4 @@
+import { FIELD_NODE_SETTINGS } from "../../HeatTransferConstants.js";
 /**
  * FieldNode.ts
  *
@@ -43,10 +44,10 @@ import type { FieldSimulationModel } from "../model/FieldSimulationModel.js";
 import HeatTransferHotkeyData from "./HeatTransferHotkeyData.js";
 
 /** Fraction of the field the keyboard cursor moves per arrow-key press. */
-const KEYBOARD_STEP = 0.05;
+const KEYBOARD_STEP: number = FIELD_NODE_SETTINGS.KEYBOARD_STEP;
 
 /** Finer keyboard step, used while shift is held. */
-const KEYBOARD_FINE_STEP = 0.01;
+const KEYBOARD_FINE_STEP: number = FIELD_NODE_SETTINGS.KEYBOARD_FINE_STEP;
 
 export type FieldNodeOptions = NodeOptions & {
   /** Accessible name for the field itself. */
@@ -71,7 +72,10 @@ export class FieldNode extends Node {
   private readonly keyboardCursor: Path;
 
   /** Keyboard paint position, in the unit square. */
-  private keyboardPosition = new Vector2(0.5, 0.5);
+  private keyboardPosition = new Vector2(
+    FIELD_NODE_SETTINGS.KEYBOARD_POSITION_X,
+    FIELD_NODE_SETTINGS.KEYBOARD_POSITION_Y,
+  );
 
   public constructor(model: FieldSimulationModel, providedOptions: FieldNodeOptions) {
     super();
@@ -92,7 +96,7 @@ export class FieldNode extends Node {
 
     const border = new Rectangle(0, 0, this.viewSize, this.viewSize, {
       stroke: HeatTransferColors.fieldBorderColorProperty,
-      lineWidth: 1.5,
+      lineWidth: FIELD_NODE_SETTINGS.BORDER_LINE_WIDTH,
       pickable: false,
     });
     this.addChild(border);
@@ -101,8 +105,8 @@ export class FieldNode extends Node {
 
     this.hoverRing = new Circle(this.brushRadiusInView(), {
       stroke: HeatTransferColors.brushOutlineColorProperty,
-      lineWidth: 1.5,
-      lineDash: [4, 3],
+      lineWidth: FIELD_NODE_SETTINGS.HOVER_RING_LINE_WIDTH,
+      lineDash: [FIELD_NODE_SETTINGS.CONSTRUCTOR_LINE_DASH_DASH, 3],
       visible: false,
       pickable: false,
     });
@@ -110,7 +114,7 @@ export class FieldNode extends Node {
 
     this.keyboardCursor = new Path(null, {
       stroke: HeatTransferColors.brushOutlineColorProperty,
-      lineWidth: 2,
+      lineWidth: FIELD_NODE_SETTINGS.KEYBOARD_CURSOR_LINE_WIDTH,
       visible: false,
       pickable: false,
     });

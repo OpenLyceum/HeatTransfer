@@ -1,3 +1,4 @@
+import { LAYER_CONTROL_PANEL_SETTINGS } from "../../HeatTransferConstants.js";
 /**
  * LayerControlPanel.ts
  *
@@ -65,12 +66,12 @@ export class LayerControlPanel extends HeatTransferPanel {
         new Text(source.label, {
           font: new PhetFont(LABEL_FONT_SIZE),
           fill: HeatTransferColors.textColorProperty,
-          maxWidth: CONTROL_PANEL_WIDTH - 60,
+          maxWidth: CONTROL_PANEL_WIDTH - LAYER_CONTROL_PANEL_SETTINGS.CHECKBOXES_MAX_WIDTH_OFFSET,
         }),
         {
           checkboxColor: HeatTransferColors.textColorProperty,
           checkboxColorBackground: HeatTransferColors.panelBackgroundColorProperty,
-          spacing: 8,
+          spacing: LAYER_CONTROL_PANEL_SETTINGS.CHECKBOXES_SPACING,
           accessibleName: source.label,
         },
       );
@@ -79,12 +80,12 @@ export class LayerControlPanel extends HeatTransferPanel {
     const title = new Text(controls.fieldLayersStringProperty, {
       font: new PhetFont({ size: TITLE_FONT_SIZE, weight: "bold" }),
       fill: HeatTransferColors.textColorProperty,
-      maxWidth: CONTROL_PANEL_WIDTH - 30,
+      maxWidth: CONTROL_PANEL_WIDTH - LAYER_CONTROL_PANEL_SETTINGS.TITLE_MAX_WIDTH_OFFSET,
     });
 
     const content = new VBox({
       align: "left",
-      spacing: 7,
+      spacing: LAYER_CONTROL_PANEL_SETTINGS.CONTENT_SPACING,
       children: [title, ...checkboxes, ...extras],
       accessibleHeading: controls.fieldLayersStringProperty,
       accessibleHelpText: a11y.controls.layersStringProperty,

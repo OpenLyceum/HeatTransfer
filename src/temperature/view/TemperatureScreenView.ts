@@ -1,3 +1,4 @@
+import { TEMPERATURE_SCREEN_VIEW_SETTINGS } from "../../HeatTransferConstants.js";
 /**
  * TemperatureScreenView.ts
  *
@@ -60,7 +61,7 @@ export class TemperatureScreenView extends FieldScreenView {
     const viewPanel = new HeatTransferPanel(
       new VBox({
         align: "left",
-        spacing: 7,
+        spacing: TEMPERATURE_SCREEN_VIEW_SETTINGS.VIEW_PANEL_SPACING,
         children: [panelTitle(controls.fieldLayersStringProperty), isothermCheckbox, probeCheckbox],
       }),
     );

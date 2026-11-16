@@ -1,3 +1,4 @@
+import { GPU_CONTEXT_SETTINGS } from "../../../HeatTransferConstants.js";
 /**
  * GpuContext.ts
  *
@@ -91,7 +92,7 @@ export async function initializeGpuContext(forceCpu: boolean): Promise<GpuInitia
 }
 
 /** Edge length of the throwaway canvas used by the presentation check. */
-const PRESENTATION_PROBE_SIZE = 4;
+const PRESENTATION_PROBE_SIZE: number = GPU_CONTEXT_SETTINGS.PRESENTATION_PROBE_SIZE;
 
 /**
  * Whether a WebGPU canvas's output can actually be composited into Scenery.

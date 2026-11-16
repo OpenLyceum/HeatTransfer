@@ -1,3 +1,4 @@
+import { HEAT_TRANSFER_PREFERENCES_NODE_SETTINGS } from "../HeatTransferConstants.js";
 /**
  * HeatTransferPreferencesNode.ts
  *
@@ -19,7 +20,7 @@ import { StringManager } from "../i18n/StringManager.js";
 import type { HeatTransferPreferencesModel } from "./HeatTransferPreferencesModel.js";
 
 /** Preference-label font size. */
-const LABEL_SIZE = 14;
+const LABEL_SIZE: number = HEAT_TRANSFER_PREFERENCES_NODE_SETTINGS.LABEL_SIZE;
 
 export class HeatTransferPreferencesNode extends VBox {
   public constructor(preferencesModel: HeatTransferPreferencesModel, tandem?: Tandem) {
@@ -32,7 +33,7 @@ export class HeatTransferPreferencesNode extends VBox {
     });
 
     const header = new Text(preferenceStrings.titleStringProperty, {
-      font: new PhetFont({ size: 18, weight: "bold" }),
+      font: new PhetFont({ size: HEAT_TRANSFER_PREFERENCES_NODE_SETTINGS.HEADER_FONT_SIZE, weight: "bold" }),
       fill: HeatTransferColors.controlSurfaceTextColorProperty,
     });
 
@@ -58,8 +59,8 @@ export class HeatTransferPreferencesNode extends VBox {
       {
         orientation: "vertical",
         align: "left",
-        spacing: 6,
-        radioButtonOptions: { radius: 7 },
+        spacing: HEAT_TRANSFER_PREFERENCES_NODE_SETTINGS.RESOLUTION_RADIO_BUTTONS_SPACING,
+        radioButtonOptions: { radius: HEAT_TRANSFER_PREFERENCES_NODE_SETTINGS.RESOLUTION_RADIO_BUTTONS_RADIUS },
         accessibleName: preferenceStrings.resolutionStringProperty,
         accessibleHelpText: preferenceStrings.resolutionHelpStringProperty,
         ...(tandem && { tandem: tandem.createTandem("resolutionRadioButtonGroup") }),
@@ -67,9 +68,9 @@ export class HeatTransferPreferencesNode extends VBox {
     );
 
     const resolutionHelp = new Text(preferenceStrings.resolutionHelpStringProperty, {
-      font: new PhetFont(11),
+      font: new PhetFont(HEAT_TRANSFER_PREFERENCES_NODE_SETTINGS.RESOLUTION_HELP_FONT_SIZE),
       fill: HeatTransferColors.controlSurfaceTextColorProperty,
-      maxWidth: 340,
+      maxWidth: HEAT_TRANSFER_PREFERENCES_NODE_SETTINGS.RESOLUTION_HELP_MAX_WIDTH,
     });
 
     const statusCheckbox = new Checkbox(
@@ -78,7 +79,7 @@ export class HeatTransferPreferencesNode extends VBox {
       {
         checkboxColor: HeatTransferColors.controlSurfaceTextColorProperty,
         checkboxColorBackground: HeatTransferColors.controlSurfaceColorProperty,
-        spacing: 8,
+        spacing: HEAT_TRANSFER_PREFERENCES_NODE_SETTINGS.STATUS_CHECKBOX_SPACING,
         accessibleName: preferenceStrings.showFieldStatusStringProperty,
         ...(tandem && { tandem: tandem.createTandem("showFieldStatusCheckbox") }),
       },
@@ -86,7 +87,7 @@ export class HeatTransferPreferencesNode extends VBox {
 
     super({
       align: "left",
-      spacing: 12,
+      spacing: HEAT_TRANSFER_PREFERENCES_NODE_SETTINGS.CONSTRUCTOR_SPACING,
       children: [header, resolutionHeader, resolutionRadioButtons, resolutionHelp, statusCheckbox],
     });
   }

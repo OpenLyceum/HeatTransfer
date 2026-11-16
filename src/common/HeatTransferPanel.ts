@@ -1,3 +1,4 @@
+import { HEAT_TRANSFER_PANEL_SETTINGS } from "../HeatTransferConstants.js";
 /**
  * HeatTransferPanel.ts
  *
@@ -32,7 +33,7 @@ import HeatTransferColors from "../HeatTransferColors.js";
 import { PANEL_CORNER_RADIUS } from "../HeatTransferConstants.js";
 
 /** Horizontal inner margin of every control panel, px. */
-export const PANEL_X_MARGIN = 12;
+export const PANEL_X_MARGIN: number = HEAT_TRANSFER_PANEL_SETTINGS.PANEL_X_MARGIN;
 
 export type HeatTransferPanelOptions = PanelOptions;
 
@@ -44,7 +45,7 @@ export class HeatTransferPanel extends Panel {
         stroke: HeatTransferColors.panelBorderColorProperty,
         cornerRadius: PANEL_CORNER_RADIUS,
         xMargin: PANEL_X_MARGIN,
-        yMargin: 10,
+        yMargin: HEAT_TRANSFER_PANEL_SETTINGS.OPTIONS_Y_MARGIN,
       },
       providedOptions,
     );

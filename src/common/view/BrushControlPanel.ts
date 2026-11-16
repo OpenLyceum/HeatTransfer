@@ -1,3 +1,4 @@
+import { BRUSH_CONTROL_PANEL_SETTINGS } from "../../HeatTransferConstants.js";
 /**
  * BrushControlPanel.ts
  *
@@ -28,11 +29,11 @@ import { BrushMode, type BrushModeId, type FieldSimulationModel } from "../model
 import { labelledSlider, panelTitle } from "./ControlFactory.js";
 
 /** Brush-mode button row: gap between buttons, and their side margins, px. */
-const BUTTON_SPACING = 8;
-const BUTTON_X_MARGIN = 16;
-const MATERIAL_MODE_BUTTON_X_MARGIN = 6;
+const BUTTON_SPACING: number = BRUSH_CONTROL_PANEL_SETTINGS.BUTTON_SPACING;
+const BUTTON_X_MARGIN: number = BRUSH_CONTROL_PANEL_SETTINGS.BUTTON_X_MARGIN;
+const MATERIAL_MODE_BUTTON_X_MARGIN: number = BRUSH_CONTROL_PANEL_SETTINGS.MATERIAL_MODE_BUTTON_X_MARGIN;
 /** Room left for the selected-button stroke on both sides, px. */
-const BUTTON_STROKE_ALLOWANCE = 4;
+const BUTTON_STROKE_ALLOWANCE: number = BRUSH_CONTROL_PANEL_SETTINGS.BUTTON_STROKE_ALLOWANCE;
 
 export class BrushControlPanel extends HeatTransferPanel {
   /** The interactive children, in traversal order, for the ScreenView's `pdomOrder`. */
@@ -89,7 +90,7 @@ export class BrushControlPanel extends HeatTransferPanel {
       radioButtonOptions: {
         baseColor: HeatTransferColors.controlSurfaceColorProperty,
         xMargin: buttonXMargin,
-        yMargin: 6,
+        yMargin: BRUSH_CONTROL_PANEL_SETTINGS.MODE_GROUP_Y_MARGIN,
         buttonAppearanceStrategyOptions: {
           selectedStroke: HeatTransferColors.accentColorProperty,
           selectedLineWidth: 3,
@@ -108,7 +109,7 @@ export class BrushControlPanel extends HeatTransferPanel {
     super(
       new VBox({
         align: "left",
-        spacing: 9,
+        spacing: BRUSH_CONTROL_PANEL_SETTINGS.CONSTRUCTOR_SPACING,
         children: [panelTitle(controls.brushStringProperty), modeGroup, size.node],
       }),
       providedOptions,

@@ -1,3 +1,4 @@
+import { FIELD_STATUS_NODE_SETTINGS } from "../../HeatTransferConstants.js";
 /**
  * FieldStatusNode.ts
  *
@@ -23,7 +24,7 @@ import { StringManager } from "../../i18n/StringManager.js";
 import { FieldBackend } from "../field/FieldEngine.js";
 import type { FieldSimulationModel } from "../model/FieldSimulationModel.js";
 
-const SECONDS_PER_MINUTE = 60;
+const SECONDS_PER_MINUTE: number = FIELD_STATUS_NODE_SETTINGS.SECONDS_PER_MINUTE;
 
 export class FieldStatusNode extends HBox {
   public constructor(model: FieldSimulationModel, providedOptions?: NodeOptions) {
@@ -58,7 +59,7 @@ export class FieldStatusNode extends HBox {
     };
 
     super({
-      spacing: 14,
+      spacing: FIELD_STATUS_NODE_SETTINGS.CONSTRUCTOR_SPACING,
       children: [new Text(backendLabel, style), new Text(gridLabel, style), new Text(elapsedLabel, style)],
       accessibleParagraph: a11y.controls.fieldStatusStringProperty,
       ...providedOptions,

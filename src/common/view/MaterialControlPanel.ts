@@ -1,3 +1,4 @@
+import { MATERIAL_CONTROL_PANEL_SETTINGS } from "../../HeatTransferConstants.js";
 /**
  * MaterialControlPanel.ts
  *
@@ -92,7 +93,10 @@ export class MaterialControlPanel extends HeatTransferPanel {
       interactive.push(edgeComboBox);
     }
 
-    super(new VBox({ align: "left", spacing: 8, children }), providedOptions);
+    super(
+      new VBox({ align: "left", spacing: MATERIAL_CONTROL_PANEL_SETTINGS.CONSTRUCTOR_SPACING, children }),
+      providedOptions,
+    );
     this.controls = interactive;
   }
 }

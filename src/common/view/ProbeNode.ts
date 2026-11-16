@@ -1,3 +1,4 @@
+import { PROBE_NODE_SETTINGS } from "../../HeatTransferConstants.js";
 /**
  * ProbeNode.ts
  *
@@ -29,13 +30,13 @@ import type { FieldNode } from "./FieldNode.js";
 import { formatCelsius } from "./formatters.js";
 
 /** Radius of the probe's ring, in view coordinates. */
-const RING_RADIUS = 9;
+const RING_RADIUS: number = PROBE_NODE_SETTINGS.RING_RADIUS;
 
 /** Height of the readout bubble. */
-const BUBBLE_HEIGHT = 26;
+const BUBBLE_HEIGHT: number = PROBE_NODE_SETTINGS.BUBBLE_HEIGHT;
 
 /** Fraction of the field a keyboard arrow press moves the probe. */
-const KEYBOARD_STEP = 0.02;
+const KEYBOARD_STEP: number = PROBE_NODE_SETTINGS.KEYBOARD_STEP;
 
 export class ProbeNode extends Node {
   public constructor(model: FieldSimulationModel, fieldNode: FieldNode, providedOptions?: NodeOptions) {
@@ -58,7 +59,7 @@ export class ProbeNode extends Node {
     const bubble = new Path(null, {
       fill: HeatTransferColors.controlSurfaceColorProperty,
       stroke: HeatTransferColors.probeColorProperty,
-      lineWidth: 1.5,
+      lineWidth: PROBE_NODE_SETTINGS.BUBBLE_LINE_WIDTH,
     });
 
     // The bubble is redrawn rather than scaled so its corner radius stays constant
@@ -67,14 +68,14 @@ export class ProbeNode extends Node {
       const width = Math.max(56, label.width + 16);
       bubble.shape = Shape.roundRectangle(-width / 2, -BUBBLE_HEIGHT - RING_RADIUS - 6, width, BUBBLE_HEIGHT, 5, 5);
       label.centerX = 0;
-      label.centerY = -BUBBLE_HEIGHT / 2 - RING_RADIUS - 6;
+      label.centerY = -BUBBLE_HEIGHT / 2 - RING_RADIUS - PROBE_NODE_SETTINGS.CONSTRUCTOR_CENTER_Y_OFFSET;
     });
 
     // ── Crosshair ─────────────────────────────────────────────────────────────
 
     const ring = new Circle(RING_RADIUS, {
       stroke: HeatTransferColors.probeColorProperty,
-      lineWidth: 2.5,
+      lineWidth: PROBE_NODE_SETTINGS.RING_LINE_WIDTH,
     });
     const crosshair = new Path(
       new Shape()
@@ -82,7 +83,7 @@ export class ProbeNode extends Node {
         .lineTo(RING_RADIUS + 5, 0)
         .moveTo(0, -RING_RADIUS - 5)
         .lineTo(0, RING_RADIUS + 5),
-      { stroke: HeatTransferColors.probeColorProperty, lineWidth: 1.5 },
+      { stroke: HeatTransferColors.probeColorProperty, lineWidth: PROBE_NODE_SETTINGS.CROSSHAIR_LINE_WIDTH },
     );
 
     this.children = [bubble, label, ring, crosshair];

@@ -1,3 +1,4 @@
+import { CONTROL_FACTORY_SETTINGS } from "../../HeatTransferConstants.js";
 /**
  * ControlFactory.ts
  *
@@ -29,7 +30,7 @@ import { HEAT_TRANSFER_COMBO_BOX_OPTIONS } from "../HeatTransferButtonOptions.js
 const CONTENT_WIDTH = CONTROL_PANEL_WIDTH - 30;
 
 /** Slider track dimensions shared by every slider in the sim. */
-const SLIDER_TRACK = new Dimension2(CONTENT_WIDTH - 10, 4);
+const SLIDER_TRACK = new Dimension2(CONTENT_WIDTH - 10, CONTROL_FACTORY_SETTINGS.SLIDER_TRACK_HEIGHT);
 
 /** A panel heading. */
 export function panelTitle(label: TReadOnlyProperty<string>): Text {
@@ -63,7 +64,7 @@ function comboBoxLabel(label: TReadOnlyProperty<string>): Text {
   return new Text(label, {
     font: new PhetFont(LABEL_FONT_SIZE),
     fill: HeatTransferColors.controlSurfaceTextColorProperty,
-    maxWidth: CONTENT_WIDTH - 40,
+    maxWidth: CONTENT_WIDTH - CONTROL_FACTORY_SETTINGS.COMBO_BOX_LABEL_MAX_WIDTH_OFFSET,
   });
 }
 
@@ -93,7 +94,7 @@ export function labelledSlider(options: LabelledSliderOptions): { node: VBox; sl
     trackSize: SLIDER_TRACK,
     trackFillEnabled: HeatTransferColors.panelBorderColorProperty,
     thumbFill: HeatTransferColors.accentColorProperty,
-    thumbSize: new Dimension2(13, 24),
+    thumbSize: new Dimension2(CONTROL_FACTORY_SETTINGS.SLIDER_WIDTH, CONTROL_FACTORY_SETTINGS.SLIDER_HEIGHT),
     accessibleName: options.accessibleName,
     ...(options.accessibleHelpText && { accessibleHelpText: options.accessibleHelpText }),
   });
@@ -113,7 +114,7 @@ export function labelledSlider(options: LabelledSliderOptions): { node: VBox; sl
   }
 
   return {
-    node: new VBox({ align: "left", spacing: 5, children }),
+    node: new VBox({ align: "left", spacing: CONTROL_FACTORY_SETTINGS.LABELLED_SLIDER_SPACING, children }),
     slider,
   };
 }
@@ -137,7 +138,7 @@ export function themedCheckbox(
   return new Checkbox(property, panelLabel(label), {
     checkboxColor: HeatTransferColors.textColorProperty,
     checkboxColorBackground: HeatTransferColors.panelBackgroundColorProperty,
-    spacing: 8,
+    spacing: CONTROL_FACTORY_SETTINGS.THEMED_CHECKBOX_SPACING,
     accessibleName: label,
     ...(accessibleHelpText && { accessibleHelpText }),
   });
@@ -167,8 +168,8 @@ export function themedComboBox<T>(
     listParent,
     {
       ...HEAT_TRANSFER_COMBO_BOX_OPTIONS,
-      xMargin: 10,
-      yMargin: 5,
+      xMargin: CONTROL_FACTORY_SETTINGS.THEMED_COMBO_BOX_X_MARGIN,
+      yMargin: CONTROL_FACTORY_SETTINGS.THEMED_COMBO_BOX_Y_MARGIN,
       accessibleName,
       ...(accessibleHelpText && { accessibleHelpText }),
     },

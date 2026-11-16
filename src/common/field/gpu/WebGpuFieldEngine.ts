@@ -1,3 +1,4 @@
+import { WEB_GPU_FIELD_ENGINE_SETTINGS } from "../../../HeatTransferConstants.js";
 /**
  * WebGpuFieldEngine.ts
  *
@@ -74,10 +75,10 @@ import { requestCanvasContext, type WebGpuContext } from "./WebGpuSupport.js";
 type PingPongIndex = 0 | 1;
 
 /** Floats per particle in the storage buffer: (u, v, life, seed). */
-const PARTICLE_STRIDE = 4;
+const PARTICLE_STRIDE: number = WEB_GPU_FIELD_ENGINE_SETTINGS.PARTICLE_STRIDE;
 
 /** Radius of a tracer particle in clip-space units. */
-const PARTICLE_CLIP_SIZE = 0.006;
+const PARTICLE_CLIP_SIZE: number = WEB_GPU_FIELD_ENGINE_SETTINGS.PARTICLE_CLIP_SIZE;
 
 export class WebGpuFieldEngine extends FieldEngineBase {
   public readonly backend: FieldBackendId = FieldBackend.WEBGPU;

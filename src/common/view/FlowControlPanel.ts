@@ -1,3 +1,4 @@
+import { FLOW_CONTROL_PANEL_SETTINGS } from "../../HeatTransferConstants.js";
 /**
  * FlowControlPanel.ts
  *
@@ -22,7 +23,7 @@ import { labelledSlider, panelTitle, themedComboBox } from "./ControlFactory.js"
 import { formatSpeed } from "./formatters.js";
 
 /** Slowest selectable flow, in metres per second. Zero would make the layer pointless. */
-const MIN_FLOW_SPEED = 0.0002;
+const MIN_FLOW_SPEED: number = FLOW_CONTROL_PANEL_SETTINGS.MIN_FLOW_SPEED;
 
 export class FlowControlPanel extends HeatTransferPanel {
   public readonly controls: readonly Node[];
@@ -59,7 +60,7 @@ export class FlowControlPanel extends HeatTransferPanel {
     super(
       new VBox({
         align: "left",
-        spacing: 9,
+        spacing: FLOW_CONTROL_PANEL_SETTINGS.CONSTRUCTOR_SPACING,
         children: [panelTitle(controls.flowStringProperty), presetComboBox, speedControl.node],
       }),
       providedOptions,

@@ -1,3 +1,4 @@
+import { MATERIALS_SCREEN_VIEW_SETTINGS } from "../../HeatTransferConstants.js";
 /**
  * MaterialsScreenView.ts
  *
@@ -29,7 +30,10 @@ import { MaterialsScreenSummaryContent } from "./MaterialsScreenSummaryContent.j
  * Anisotropy range. The value multiplies k_x and divides k_y, so 4 means heat
  * moves sixteen times more readily along x than along y.
  */
-const ANISOTROPY_RANGE = new Range(0.25, 4);
+const ANISOTROPY_RANGE = new Range(
+  MATERIALS_SCREEN_VIEW_SETTINGS.ANISOTROPY_RANGE_MIN,
+  MATERIALS_SCREEN_VIEW_SETTINGS.ANISOTROPY_RANGE_MAX,
+);
 
 /** The view supplies the field's accessible name and summary itself. */
 export type MaterialsScreenViewOptions = Omit<
@@ -82,7 +86,7 @@ export class MaterialsScreenView extends FieldScreenView {
     const paintPanel = new HeatTransferPanel(
       new VBox({
         align: "left",
-        spacing: 8,
+        spacing: MATERIALS_SCREEN_VIEW_SETTINGS.PAINT_PANEL_SPACING,
         children: [panelTitle(controls.paintMaterialStringProperty), paintComboBox, anisotropy.node],
       }),
     );

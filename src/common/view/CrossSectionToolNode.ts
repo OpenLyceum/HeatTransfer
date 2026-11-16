@@ -1,3 +1,4 @@
+import { CROSS_SECTION_TOOL_NODE_SETTINGS } from "../../HeatTransferConstants.js";
 /**
  * CrossSectionToolNode.ts
  *
@@ -20,10 +21,10 @@ import type { FieldSimulationModel } from "../model/FieldSimulationModel.js";
 import type { FieldNode } from "./FieldNode.js";
 
 /** Radius of a drag handle, in view coordinates. */
-const HANDLE_RADIUS = 8;
+const HANDLE_RADIUS: number = CROSS_SECTION_TOOL_NODE_SETTINGS.HANDLE_RADIUS;
 
 /** How far one keyboard drag step moves a handle, as a fraction of the field. */
-const KEYBOARD_SCALE = 0.5;
+const KEYBOARD_SCALE: number = CROSS_SECTION_TOOL_NODE_SETTINGS.KEYBOARD_SCALE;
 
 export class CrossSectionToolNode extends Node {
   /** The two handles, in traversal order. */
@@ -37,8 +38,11 @@ export class CrossSectionToolNode extends Node {
 
     const line = new Path(null, {
       stroke: HeatTransferColors.crossSectionColorProperty,
-      lineWidth: 2.5,
-      lineDash: [7, 4],
+      lineWidth: CROSS_SECTION_TOOL_NODE_SETTINGS.LINE_LINE_WIDTH,
+      lineDash: [
+        CROSS_SECTION_TOOL_NODE_SETTINGS.LINE_LINE_DASH_DASH,
+        CROSS_SECTION_TOOL_NODE_SETTINGS.CONSTRUCTOR_LINE_LINE_DASH_DASH,
+      ],
       pickable: false,
     });
     this.addChild(line);
@@ -50,7 +54,7 @@ export class CrossSectionToolNode extends Node {
       const handle = new Circle(HANDLE_RADIUS, {
         fill: HeatTransferColors.crossSectionColorProperty,
         stroke: HeatTransferColors.brushOutlineColorProperty,
-        lineWidth: 1.5,
+        lineWidth: CROSS_SECTION_TOOL_NODE_SETTINGS.HANDLE_LINE_WIDTH,
         cursor: "pointer",
         tagName: "div",
         focusable: true,

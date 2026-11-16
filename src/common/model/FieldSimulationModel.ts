@@ -1,3 +1,4 @@
+import { FIELD_SIMULATION_SETTINGS } from "../../HeatTransferConstants.js";
 /**
  * FieldSimulationModel.ts
  *
@@ -224,8 +225,10 @@ export class FieldSimulationModel implements TModel {
     this.probeTemperatureProperty = new NumberProperty(this.engine.sampleTemperature(0.5, 0.5), { units: "K" });
     this.probeVisibleProperty = new BooleanProperty(false);
 
-    this.crossSectionStartProperty = new Vector2Property(new Vector2(0.1, 0.5));
-    this.crossSectionEndProperty = new Vector2Property(new Vector2(0.9, 0.5));
+    this.crossSectionStartProperty = new Vector2Property(
+      new Vector2(FIELD_SIMULATION_SETTINGS.CROSS_SECTION_START_U, 0.5),
+    );
+    this.crossSectionEndProperty = new Vector2Property(new Vector2(FIELD_SIMULATION_SETTINGS.CROSS_SECTION_END_U, 0.5));
     this.crossSectionVisibleProperty = new BooleanProperty(false);
     this.crossSectionSamplesProperty = new Property<CrossSectionSample[]>([]);
 
@@ -361,7 +364,7 @@ export class FieldSimulationModel implements TModel {
 
   /** Advances one frame's worth of simulation regardless of the play/pause state. */
   public stepOnce(): void {
-    this.advance(1 / 60);
+    this.advance(FIELD_SIMULATION_SETTINGS.MANUAL_STEP_SECONDS);
   }
 
   private advance(dt: number): void {
@@ -373,8 +376,13 @@ export class FieldSimulationModel implements TModel {
 
     // Scale the substep budget by how long the frame actually was, so the
     // simulation runs at the same rate on a 30 Hz display as on a 120 Hz one.
-    const budget = Math.round(SUBSTEPS_PER_FRAME * speedFactor * clamped * 60);
-    const substeps = Math.min(Math.max(budget, 1), SUBSTEPS_PER_FRAME * 4);
+    const budget = Math.round(
+      SUBSTEPS_PER_FRAME * speedFactor * clamped * FIELD_SIMULATION_SETTINGS.REFERENCE_FRAME_RATE,
+    );
+    const substeps = Math.min(
+      Math.max(budget, 1),
+      SUBSTEPS_PER_FRAME * FIELD_SIMULATION_SETTINGS.MAX_BUDGET_MULTIPLIER,
+    );
 
     this.engine.step({
       advectionEnabled: this.config.advectionEnabled && this.flowPresetProperty.value !== FlowPreset.NONE,

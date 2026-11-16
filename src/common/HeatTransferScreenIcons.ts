@@ -15,6 +15,7 @@ import { Shape } from "scenerystack/kite";
 import { Circle, LinearGradient, Node, Path, RadialGradient, Rectangle } from "scenerystack/scenery";
 import { ScreenIcon } from "scenerystack/sim";
 import HeatTransferColors from "../HeatTransferColors.js";
+import { HEAT_TRANSFER_SCREEN_ICONS_SETTINGS } from "../HeatTransferConstants.js";
 import { rgbToCss, sampleColorMap } from "./field/ColorMap.js";
 
 /** Icon canvas width. */
@@ -59,7 +60,11 @@ function iconFrom(content: Node): ScreenIcon {
 export function createTemperatureIcon(): ScreenIcon {
   return iconFrom(
     new Node({
-      children: [background(), fieldTile(), hotSpot(W / 2, H / 2, 190)],
+      children: [
+        background(),
+        fieldTile(),
+        hotSpot(W / 2, H / 2, HEAT_TRANSFER_SCREEN_ICONS_SETTINGS.CREATE_TEMPERATURE_ICON_RADIUS),
+      ],
     }),
   );
 }
@@ -93,8 +98,12 @@ export function createConductionIcon(): ScreenIcon {
       children: [
         background(),
         fieldTile(),
-        hotSpot(centreX, centreY, 150),
-        new Path(arrows, { stroke: HeatTransferColors.heatFluxColorProperty, lineWidth: 9, lineCap: "round" }),
+        hotSpot(centreX, centreY, HEAT_TRANSFER_SCREEN_ICONS_SETTINGS.CREATE_CONDUCTION_ICON_RADIUS),
+        new Path(arrows, {
+          stroke: HeatTransferColors.heatFluxColorProperty,
+          lineWidth: HEAT_TRANSFER_SCREEN_ICONS_SETTINGS.CREATE_CONDUCTION_ICON_LINE_WIDTH,
+          lineCap: "round",
+        }),
       ],
     }),
   );
@@ -112,18 +121,26 @@ export function createConvectionIcon(): ScreenIcon {
   const tracers = new Node();
   for (let n = 0; n < 14; n++) {
     tracers.addChild(
-      new Circle(7, {
-        x: 30 + n * 38,
-        y: n % 2 === 0 ? H * 0.2 : H * 0.8,
+      new Circle(HEAT_TRANSFER_SCREEN_ICONS_SETTINGS.CREATE_CONVECTION_ICON_RADIUS, {
+        x:
+          HEAT_TRANSFER_SCREEN_ICONS_SETTINGS.CREATE_CONVECTION_ICON_X_OFFSET +
+          n * HEAT_TRANSFER_SCREEN_ICONS_SETTINGS.CREATE_CONVECTION_ICON_X_FACTOR,
+        y: n % 2 === 0 ? H * HEAT_TRANSFER_SCREEN_ICONS_SETTINGS.CREATE_CONVECTION_ICON_Y_FACTOR : H * 0.8,
         fill: HeatTransferColors.particleColorProperty,
-        opacity: 0.85,
+        opacity: HEAT_TRANSFER_SCREEN_ICONS_SETTINGS.CREATE_CONVECTION_ICON_OPACITY,
       }),
     );
   }
 
   return iconFrom(
     new Node({
-      children: [background(), fieldTile(), streak, hotSpot(90, H / 2, 110), tracers],
+      children: [
+        background(),
+        fieldTile(),
+        streak,
+        hotSpot(90, H / 2, HEAT_TRANSFER_SCREEN_ICONS_SETTINGS.CREATE_CONVECTION_ICON_RADIUS_SEGMENT_2),
+        tracers,
+      ],
     }),
   );
 }
@@ -131,9 +148,14 @@ export function createConvectionIcon(): ScreenIcon {
 /** Heat Transfer: a hot spot both spreading and being swept downstream. */
 export function createHeatTransferIcon(): ScreenIcon {
   const comet = new Shape()
-    .moveTo(130, H / 2 - 105)
-    .quadraticCurveTo(360, H / 2 - 55, W - 40, H / 2)
-    .quadraticCurveTo(360, H / 2 + 55, 130, H / 2 + 105)
+    .moveTo(HEAT_TRANSFER_SCREEN_ICONS_SETTINGS.COMET_X, H / 2 - 105)
+    .quadraticCurveTo(HEAT_TRANSFER_SCREEN_ICONS_SETTINGS.COMET_CONTROL_X, H / 2 - 55, W - 40, H / 2)
+    .quadraticCurveTo(
+      HEAT_TRANSFER_SCREEN_ICONS_SETTINGS.COMET_CONTROL_X,
+      H / 2 + 55,
+      HEAT_TRANSFER_SCREEN_ICONS_SETTINGS.COMET_END_X,
+      H / 2 + 105,
+    )
     .close();
 
   return iconFrom(
@@ -147,7 +169,7 @@ export function createHeatTransferIcon(): ScreenIcon {
             .addColorStop(0.5, rampColor(0.72))
             .addColorStop(1, rampColor(0.36)),
         }),
-        hotSpot(150, H / 2, 95),
+        hotSpot(150, H / 2, HEAT_TRANSFER_SCREEN_ICONS_SETTINGS.CREATE_HEAT_TRANSFER_ICON_RADIUS),
       ],
     }),
   );
@@ -160,13 +182,21 @@ export function createMaterialsIcon(): ScreenIcon {
       children: [
         background(),
         fieldTile(),
-        hotSpot(W * 0.24, H / 2, 165),
-        new Rectangle(W * 0.45, 40, 62, H - 80, 8, 8, {
-          fill: HeatTransferColors.panelBackgroundColorProperty,
-          stroke: HeatTransferColors.fieldBorderColorProperty,
-          lineWidth: 5,
-        }),
-        hotSpot(W * 0.82, H / 2, 130, 0.42),
+        hotSpot(W * 0.24, H / 2, HEAT_TRANSFER_SCREEN_ICONS_SETTINGS.CREATE_MATERIALS_ICON_RADIUS),
+        new Rectangle(
+          W * 0.45,
+          HEAT_TRANSFER_SCREEN_ICONS_SETTINGS.CREATE_MATERIALS_ICON_Y,
+          HEAT_TRANSFER_SCREEN_ICONS_SETTINGS.CREATE_MATERIALS_ICON_WIDTH,
+          H - 80,
+          HEAT_TRANSFER_SCREEN_ICONS_SETTINGS.CREATE_MATERIALS_ICON_CORNER_X,
+          HEAT_TRANSFER_SCREEN_ICONS_SETTINGS.CREATE_MATERIALS_ICON_CORNER_Y,
+          {
+            fill: HeatTransferColors.panelBackgroundColorProperty,
+            stroke: HeatTransferColors.fieldBorderColorProperty,
+            lineWidth: HEAT_TRANSFER_SCREEN_ICONS_SETTINGS.CREATE_MATERIALS_ICON_LINE_WIDTH,
+          },
+        ),
+        hotSpot(W * 0.82, H / 2, HEAT_TRANSFER_SCREEN_ICONS_SETTINGS.CREATE_MATERIALS_ICON_RADIUS_SEGMENT_2, 0.42),
       ],
     }),
   );

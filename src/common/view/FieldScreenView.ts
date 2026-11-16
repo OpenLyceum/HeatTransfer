@@ -1,3 +1,4 @@
+import { FIELD_SCREEN_VIEW_SETTINGS } from "../../HeatTransferConstants.js";
 /**
  * FieldScreenView.ts
  *
@@ -157,7 +158,7 @@ export abstract class FieldScreenView extends ScreenView {
 
     const statusNode = new FieldStatusNode(model, {
       left: FIELD_VIEW_LEFT,
-      top: FIELD_VIEW_TOP + FIELD_VIEW_SIZE + 8,
+      top: FIELD_VIEW_TOP + FIELD_VIEW_SIZE + FIELD_SCREEN_VIEW_SETTINGS.STATUS_NODE_TOP_OFFSET,
       visibleProperty: providedOptions.showFieldStatusProperty,
     });
     this.addChild(statusNode);
@@ -201,7 +202,7 @@ export abstract class FieldScreenView extends ScreenView {
       },
       ...TIME_CONTROL_SPEED_RADIO_OPTIONS,
       centerX: FIELD_VIEW_LEFT + FIELD_VIEW_SIZE / 2,
-      top: FIELD_VIEW_TOP + FIELD_VIEW_SIZE + 30,
+      top: FIELD_VIEW_TOP + FIELD_VIEW_SIZE + FIELD_SCREEN_VIEW_SETTINGS.CONSTRUCTOR_TOP_OFFSET,
     });
     this.addChild(this.timeControlNode);
 
@@ -210,7 +211,7 @@ export abstract class FieldScreenView extends ScreenView {
       content: new Text(controls.clearFieldStringProperty, {
         font: new PhetFont(LABEL_FONT_SIZE),
         fill: HeatTransferColors.controlSurfaceTextColorProperty,
-        maxWidth: 120,
+        maxWidth: FIELD_SCREEN_VIEW_SETTINGS.CLEAR_FIELD_BUTTON_MAX_WIDTH,
       }),
       baseColor: HeatTransferColors.controlSurfaceColorProperty,
       listener: () => {

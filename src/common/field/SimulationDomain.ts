@@ -1,3 +1,4 @@
+import { SIMULATION_DOMAIN_SETTINGS } from "../../HeatTransferConstants.js";
 /**
  * SimulationDomain.ts
  *
@@ -147,6 +148,6 @@ export class SimulationDomain {
  * Default physical extent of the (square) plate, in metres. 10 cm on a side.
  * @internal Exported for unit tests; not part of the application API.
  */
-export const DEFAULT_PHYSICAL_SIZE = 0.1;
+export const DEFAULT_PHYSICAL_SIZE: number = SIMULATION_DOMAIN_SETTINGS.DEFAULT_PHYSICAL_SIZE;
 
 HeatTransferNamespace.register("SimulationDomain", SimulationDomain);

@@ -1,3 +1,4 @@
+import { CONDUCTION_SCREEN_VIEW_SETTINGS } from "../../HeatTransferConstants.js";
 /**
  * ConductionScreenView.ts
  *
@@ -24,7 +25,7 @@ import type { ConductionModel } from "../model/ConductionModel.js";
 import { ConductionScreenSummaryContent } from "./ConductionScreenSummaryContent.js";
 
 /** Height of the cross-section graph, in view coordinates. */
-const GRAPH_HEIGHT = 150;
+const GRAPH_HEIGHT: number = CONDUCTION_SCREEN_VIEW_SETTINGS.GRAPH_HEIGHT;
 
 /** The view supplies the field's accessible name and summary itself. */
 export type ConductionScreenViewOptions = Omit<
@@ -77,7 +78,7 @@ export class ConductionScreenView extends FieldScreenView {
     const toolPanel = new HeatTransferPanel(
       new VBox({
         align: "left",
-        spacing: 7,
+        spacing: CONDUCTION_SCREEN_VIEW_SETTINGS.TOOL_PANEL_SPACING,
         children: [
           panelTitle(controls.showCrossSectionStringProperty),
           probeCheckbox,

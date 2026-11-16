@@ -1,3 +1,4 @@
+import { CROSS_SECTION_GRAPH_NODE_SETTINGS } from "../../HeatTransferConstants.js";
 /**
  * CrossSectionGraphNode.ts
  *
@@ -30,10 +31,15 @@ import type { FieldSimulationModel } from "../model/FieldSimulationModel.js";
 import { panelReadout } from "./ControlFactory.js";
 
 /** Padding inside the plot frame, in view coordinates. */
-const PLOT_MARGIN = { left: 34, right: 12, top: 10, bottom: 22 };
+const PLOT_MARGIN = {
+  left: CROSS_SECTION_GRAPH_NODE_SETTINGS.PLOT_MARGIN_LEFT,
+  right: CROSS_SECTION_GRAPH_NODE_SETTINGS.PLOT_MARGIN_RIGHT,
+  top: CROSS_SECTION_GRAPH_NODE_SETTINGS.PLOT_MARGIN_TOP,
+  bottom: CROSS_SECTION_GRAPH_NODE_SETTINGS.PLOT_MARGIN_BOTTOM,
+};
 
 /** Number of horizontal gridlines. */
-const GRIDLINE_COUNT = 4;
+const GRIDLINE_COUNT: number = CROSS_SECTION_GRAPH_NODE_SETTINGS.GRIDLINE_COUNT;
 
 export type CrossSectionGraphNodeOptions = NodeOptions & {
   width: number;
@@ -60,10 +66,18 @@ export class CrossSectionGraphNode extends Node {
 
     // ── Frame ─────────────────────────────────────────────────────────────────
 
-    const background = new Rectangle(0, 0, width, height, 4, 4, {
-      fill: HeatTransferColors.graphBackgroundColorProperty,
-      stroke: HeatTransferColors.panelBorderColorProperty,
-    });
+    const background = new Rectangle(
+      0,
+      0,
+      width,
+      height,
+      CROSS_SECTION_GRAPH_NODE_SETTINGS.BACKGROUND_CORNER_X,
+      CROSS_SECTION_GRAPH_NODE_SETTINGS.BACKGROUND_CORNER_Y,
+      {
+        fill: HeatTransferColors.graphBackgroundColorProperty,
+        stroke: HeatTransferColors.panelBorderColorProperty,
+      },
+    );
     this.addChild(background);
 
     const plot = new Node({ x: PLOT_MARGIN.left, y: PLOT_MARGIN.top });
@@ -77,8 +91,8 @@ export class CrossSectionGraphNode extends Node {
     plot.addChild(
       new Path(gridShape, {
         stroke: HeatTransferColors.graphAxisColorProperty,
-        lineWidth: 0.5,
-        opacity: 0.5,
+        lineWidth: CROSS_SECTION_GRAPH_NODE_SETTINGS.CONSTRUCTOR_LINE_WIDTH,
+        opacity: CROSS_SECTION_GRAPH_NODE_SETTINGS.CONSTRUCTOR_OPACITY,
       }),
     );
 
@@ -90,7 +104,7 @@ export class CrossSectionGraphNode extends Node {
         new Text(`${Math.round(kelvin - KELVIN_TO_CELSIUS_OFFSET)}`, {
           font: new PhetFont(SMALL_FONT_SIZE - 1),
           fill: HeatTransferColors.graphAxisColorProperty,
-          right: -5,
+          right: CROSS_SECTION_GRAPH_NODE_SETTINGS.CONSTRUCTOR_RIGHT,
           centerY: (this.plotHeight * n) / GRIDLINE_COUNT,
         }),
       );
@@ -100,12 +114,12 @@ export class CrossSectionGraphNode extends Node {
 
     this.fluxCurve = new Path(null, {
       stroke: HeatTransferColors.fluxCurveColorProperty,
-      lineWidth: 1.5,
-      lineDash: [4, 3],
+      lineWidth: CROSS_SECTION_GRAPH_NODE_SETTINGS.FLUX_CURVE_LINE_WIDTH,
+      lineDash: [CROSS_SECTION_GRAPH_NODE_SETTINGS.CONSTRUCTOR_LINE_DASH_DASH, 3],
     });
     this.temperatureCurve = new Path(null, {
       stroke: HeatTransferColors.temperatureCurveColorProperty,
-      lineWidth: 2,
+      lineWidth: CROSS_SECTION_GRAPH_NODE_SETTINGS.TEMPERATURE_CURVE_LINE_WIDTH,
     });
     plot.addChild(this.fluxCurve);
     plot.addChild(this.temperatureCurve);
@@ -114,19 +128,19 @@ export class CrossSectionGraphNode extends Node {
 
     const title = panelReadout(graph.titleStringProperty);
     title.left = PLOT_MARGIN.left;
-    title.bottom = -3;
+    title.bottom = CROSS_SECTION_GRAPH_NODE_SETTINGS.BOTTOM_BOTTOM;
     this.addChild(title);
 
     const xAxisLabel = panelReadout(graph.distanceAxisStringProperty);
     xAxisLabel.centerX = PLOT_MARGIN.left + this.plotWidth / 2;
-    xAxisLabel.top = height - PLOT_MARGIN.bottom + 4;
+    xAxisLabel.top = height - PLOT_MARGIN.bottom + CROSS_SECTION_GRAPH_NODE_SETTINGS.CONSTRUCTOR_TOP_OFFSET;
     this.addChild(xAxisLabel);
 
     const yAxisLabel = new Text(graph.temperatureAxisStringProperty, {
       font: new PhetFont(SMALL_FONT_SIZE - 1),
       fill: HeatTransferColors.temperatureCurveColorProperty,
       rotation: -Math.PI / 2,
-      right: 10,
+      right: CROSS_SECTION_GRAPH_NODE_SETTINGS.Y_AXIS_LABEL_RIGHT,
       centerY: PLOT_MARGIN.top + this.plotHeight / 2,
     });
     this.addChild(yAxisLabel);

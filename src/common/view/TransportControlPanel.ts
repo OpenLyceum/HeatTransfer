@@ -1,3 +1,4 @@
+import { TRANSPORT_CONTROL_PANEL_SETTINGS } from "../../HeatTransferConstants.js";
 /**
  * TransportControlPanel.ts
  *
@@ -33,13 +34,13 @@ import { labelledSlider, panelReadout, panelTitle } from "./ControlFactory.js";
 import { formatPeclet } from "./formatters.js";
 
 /** Decades the balance slider sweeps in each direction. */
-const DECADES = 2;
+const DECADES: number = TRANSPORT_CONTROL_PANEL_SETTINGS.DECADES;
 
 /** Peclet numbers below this read as conduction-dominated. */
 const CONDUCTION_THRESHOLD = 1;
 
 /** Peclet numbers above this read as flow-dominated. */
-const ADVECTION_THRESHOLD = 100;
+const ADVECTION_THRESHOLD: number = TRANSPORT_CONTROL_PANEL_SETTINGS.ADVECTION_THRESHOLD;
 
 export class TransportControlPanel extends HeatTransferPanel {
   public readonly controls: readonly Node[];
@@ -53,7 +54,7 @@ export class TransportControlPanel extends HeatTransferPanel {
     const readouts = strings.getReadouts();
     const a11y = strings.getSharedA11yStrings();
 
-    const balanceProperty = new NumberProperty(0.5);
+    const balanceProperty = new NumberProperty(TRANSPORT_CONTROL_PANEL_SETTINGS.BALANCE_DEFAULT);
 
     const balance = labelledSlider({
       property: balanceProperty,
@@ -92,7 +93,7 @@ export class TransportControlPanel extends HeatTransferPanel {
     super(
       new VBox({
         align: "left",
-        spacing: 8,
+        spacing: TRANSPORT_CONTROL_PANEL_SETTINGS.CONSTRUCTOR_SPACING,
         children: [
           panelTitle(controls.transportRegimeStringProperty),
           balance.node,

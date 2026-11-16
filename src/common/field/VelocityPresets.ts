@@ -1,3 +1,4 @@
+import { VELOCITY_PRESETS_SETTINGS } from "../../HeatTransferConstants.js";
 /**
  * VelocityPresets.ts
  *
@@ -21,7 +22,7 @@ import HeatTransferNamespace from "../../HeatTransferNamespace.js";
 import { FlowPreset, type FlowPresetId } from "./FieldTypes.js";
 
 /** Radius of the vortex core, as a fraction of the domain's shorter side. */
-const VORTEX_CORE_RADIUS = 0.22;
+const VORTEX_CORE_RADIUS: number = VELOCITY_PRESETS_SETTINGS.VORTEX_CORE_RADIUS;
 
 /** A dimensionless velocity direction with |v| <= 1. */
 type UnitVelocity = { vx: number; vy: number };
