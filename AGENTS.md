@@ -103,6 +103,7 @@ Full convention:
   come either from the temperature ramp (a quantitative encoding, deliberately not themed) or from a
   `ProfileColorProperty` by way of `FieldRenderStyle`. Nothing in it chooses a colour, and it is the
   single such helper in the sim.
+- `memory-leak:WebGpuFieldEngine`: needs a real `GPUDevice`, which Vitest/happy-dom cannot provide, so `createFieldEngine` picks the CPU backend in tests. It lives as long as its `FieldSimulationModel`, whose `dispose()` disposes it; the suite covers that teardown path with `CpuFieldEngine` through the shared `FieldEngineBase`.
 - **No `src/common/TimeModel.ts`.** The template's composable timer does not fit:
   the engine's simulated time is set by the stability-limited step, not by
   accumulating `dt`, so `FieldSimulationModel` owns `isPlayingProperty` and
