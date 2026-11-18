@@ -54,7 +54,6 @@ Concretely, three invariants are worth defending:
 | `src/common/field/VelocityPresets.ts` | Analytic divergence-free flows |
 | `src/common/field/cpu/` | Reference backend + 2-D canvas renderer |
 | `src/common/field/gpu/` | WebGPU backend, device acquisition, WGSL sources |
-| `src/common/field/gpu/webgpu-globals.d.ts` | The flag namespaces TS 7's DOM lib omits |
 | **Model / view** | |
 | `src/common/model/FieldSimulationModel.ts` | The model every screen composes |
 | `src/common/view/FieldNode.ts` | The Scenery/WebGPU boundary |
@@ -99,21 +98,6 @@ Full convention:
 
 ## Compliance carve-outs
 
-- **`src/common/field/gpu/webgpu-globals.d.ts`** — an ambient declaration file
-  under `src/`. TypeScript 7's `lib.dom.d.ts` ships the WebGPU interfaces but not
-  the `GPUBufferUsage` / `GPUTextureUsage` / `GPUShaderStage` flag namespaces.
-  Declaring those here is cheaper and less fragile than adding `@webgpu/types`,
-  which would redeclare all 107 interfaces and collide with the built-in ones.
-  Delete it when a TypeScript release fills the gap — `npm run check` will say so.
-  Note it deliberately does *not* add a `getContext("webgpu")` overload: augmenting
-  `HTMLCanvasElement` puts the new overload ahead of the built-ins in resolution
-  order and breaks generic `getContext(id, ...args)` forwarding, including the
-  fleet's own `tests/setup.ts` canvas mock. `requestCanvasContext` in
-  `WebGpuSupport.ts` does that cast in one place instead.
-- **`tsconfig.test.json` lists one extra path.** Ambient declarations are not
-  inherited through `extends`, and the tests import src modules that use the
-  WebGPU flag namespaces, so the test project includes
-  `src/common/field/gpu/webgpu-globals.d.ts` alongside `tests`.
 - **Hardcoded colors:** `rgbToCss` in `ColorMap.ts` is flagged by the compliance scan because it
   builds an `rgb(...)` string. It is a *format* helper, not a palette: the components it is handed
   come either from the temperature ramp (a quantitative encoding, deliberately not themed) or from a
