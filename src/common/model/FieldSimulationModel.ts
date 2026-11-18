@@ -160,7 +160,8 @@ export class FieldSimulationModel implements TModel {
   public readonly probePositionProperty: Vector2Property;
 
   /** Temperature under the probe, in kelvin. */
-  public readonly probeTemperatureProperty: NumberProperty;
+  public readonly probeTemperatureProperty: TReadOnlyProperty<number>;
+  private readonly _probeTemperatureProperty: NumberProperty;
 
   public readonly probeVisibleProperty: BooleanProperty;
 
@@ -168,7 +169,8 @@ export class FieldSimulationModel implements TModel {
   public readonly crossSectionStartProperty: Vector2Property;
   public readonly crossSectionEndProperty: Vector2Property;
   public readonly crossSectionVisibleProperty: BooleanProperty;
-  public readonly crossSectionSamplesProperty: Property<CrossSectionSample[]>;
+  public readonly crossSectionSamplesProperty: TReadOnlyProperty<CrossSectionSample[]>;
+  private readonly _crossSectionSamplesProperty: Property<CrossSectionSample[]>;
 
   // ── Readouts ────────────────────────────────────────────────────────────────
 
@@ -222,7 +224,8 @@ export class FieldSimulationModel implements TModel {
     this.paintMaterialIdProperty = new Property<MaterialIdValue>("insulator");
 
     this.probePositionProperty = new Vector2Property(new Vector2(0.5, 0.5));
-    this.probeTemperatureProperty = new NumberProperty(this.engine.sampleTemperature(0.5, 0.5), { units: "K" });
+    this._probeTemperatureProperty = new NumberProperty(this.engine.sampleTemperature(0.5, 0.5), { units: "K" });
+    this.probeTemperatureProperty = this._probeTemperatureProperty;
     this.probeVisibleProperty = new BooleanProperty(false);
 
     this.crossSectionStartProperty = new Vector2Property(
@@ -230,7 +233,8 @@ export class FieldSimulationModel implements TModel {
     );
     this.crossSectionEndProperty = new Vector2Property(new Vector2(FIELD_SIMULATION_SETTINGS.CROSS_SECTION_END_U, 0.5));
     this.crossSectionVisibleProperty = new BooleanProperty(false);
-    this.crossSectionSamplesProperty = new Property<CrossSectionSample[]>([]);
+    this._crossSectionSamplesProperty = new Property<CrossSectionSample[]>([]);
+    this.crossSectionSamplesProperty = this._crossSectionSamplesProperty;
 
     const statistics = this.engine.getStatistics();
     this.minTemperatureProperty = new NumberProperty(statistics.minTemperature, { units: "K" });
@@ -267,7 +271,7 @@ export class FieldSimulationModel implements TModel {
     this.flowSpeedProperty.link(pushFlow);
 
     this.probePositionProperty.link((position) => {
-      this.probeTemperatureProperty.value = this.engine.sampleTemperature(position.x, position.y);
+      this._probeTemperatureProperty.value = this.engine.sampleTemperature(position.x, position.y);
     });
 
     const updateCrossSection = (): void => {
@@ -335,7 +339,7 @@ export class FieldSimulationModel implements TModel {
   public refreshCrossSection(): void {
     const start = this.crossSectionStartProperty.value;
     const end = this.crossSectionEndProperty.value;
-    this.crossSectionSamplesProperty.value = this.engine.sampleCrossSection(
+    this._crossSectionSamplesProperty.value = this.engine.sampleCrossSection(
       start.x,
       start.y,
       end.x,
@@ -346,7 +350,7 @@ export class FieldSimulationModel implements TModel {
 
   private refreshProbe(): void {
     const position = this.probePositionProperty.value;
-    this.probeTemperatureProperty.value = this.engine.sampleTemperature(position.x, position.y);
+    this._probeTemperatureProperty.value = this.engine.sampleTemperature(position.x, position.y);
   }
 
   private pushMaterial(): void {
