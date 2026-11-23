@@ -19,16 +19,10 @@ export type WebGpuContext = {
   maxGridSize: number;
 };
 
-/**
- * `canvas.getContext("webgpu")`, typed.
- *
- * TypeScript 7's DOM lib has every WebGPU interface but no `"webgpu"` overload on
- * `getContext`, and augmenting `HTMLCanvasElement` to add one would reorder
- * overload resolution for every other caller. One cast, in one place, is the
- * smaller cost.
- */
+/** Requests a WebGPU context and narrows the DOM library's generic getContext result. */
 export function requestCanvasContext(canvas: HTMLCanvasElement): GPUCanvasContext | null {
-  return (canvas.getContext("webgpu") as unknown as GPUCanvasContext | null) ?? null;
+  const context = canvas.getContext("webgpu");
+  return typeof GPUCanvasContext !== "undefined" && context instanceof GPUCanvasContext ? context : null;
 }
 
 /** Whether this browser exposes the WebGPU entry point at all. */
