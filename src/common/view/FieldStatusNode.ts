@@ -42,7 +42,7 @@ export class FieldStatusNode extends HBox {
 
     // Seconds below a minute ("t = 42.0 s"), then minutes and seconds
     // ("t = 1 min 35 s"), each from its own pattern so the unit always matches.
-    const elapsedLabel = new DerivedProperty(
+    const elapsedLabelProperty = new DerivedProperty(
       [model.elapsedTimeProperty, readouts.elapsedStringProperty, readouts.elapsedMinutesStringProperty],
       (seconds, secondsPattern, minutesPattern) =>
         seconds < SECONDS_PER_MINUTE
@@ -60,7 +60,7 @@ export class FieldStatusNode extends HBox {
 
     super({
       spacing: FIELD_STATUS_NODE_SETTINGS.CONSTRUCTOR_SPACING,
-      children: [new Text(backendLabel, style), new Text(gridLabel, style), new Text(elapsedLabel, style)],
+      children: [new Text(backendLabel, style), new Text(gridLabel, style), new Text(elapsedLabelProperty, style)],
       accessibleParagraph: a11y.controls.fieldStatusStringProperty,
       ...providedOptions,
     });

@@ -1,3 +1,4 @@
+import { roundSymmetric } from "scenerystack/dot";
 import { CROSS_SECTION_GRAPH_NODE_SETTINGS } from "../../HeatTransferConstants.js";
 /**
  * CrossSectionGraphNode.ts
@@ -101,7 +102,7 @@ export class CrossSectionGraphNode extends Node {
       const fraction = n / GRIDLINE_COUNT;
       const kelvin = MIN_TEMPERATURE_K + (1 - fraction) * (MAX_TEMPERATURE_K - MIN_TEMPERATURE_K);
       plot.addChild(
-        new Text(`${Math.round(kelvin - KELVIN_TO_CELSIUS_OFFSET)}`, {
+        new Text(`${roundSymmetric(kelvin - KELVIN_TO_CELSIUS_OFFSET)}`, {
           font: new PhetFont(SMALL_FONT_SIZE - 1),
           fill: HeatTransferColors.graphAxisColorProperty,
           right: CROSS_SECTION_GRAPH_NODE_SETTINGS.CONSTRUCTOR_RIGHT,
