@@ -1,3 +1,4 @@
+import { roundSymmetric } from "scenerystack/dot";
 import { CPU_FIELD_RENDERER_SETTINGS } from "../../../HeatTransferConstants.js";
 /**
  * CpuFieldRenderer.ts
@@ -183,7 +184,7 @@ export class CpuFieldRenderer {
 
   /** The colour ramp sampled through the byte LUT, as 0-255 components. */
   private lookUpColor(position: number): { red: number; green: number; blue: number } {
-    const lut = Math.min(COLOR_LUT_SIZE - 1, Math.max(0, Math.round(position * (COLOR_LUT_SIZE - 1))));
+    const lut = Math.min(COLOR_LUT_SIZE - 1, Math.max(0, roundSymmetric(position * (COLOR_LUT_SIZE - 1))));
     return {
       red: this.colorLut[3 * lut] ?? 0,
       green: this.colorLut[3 * lut + 1] ?? 0,

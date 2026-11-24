@@ -12,7 +12,7 @@ import { TEMPERATURE_LEGEND_NODE_SETTINGS } from "../../HeatTransferConstants.js
  */
 
 import { DerivedProperty, PatternStringProperty, type TReadOnlyProperty } from "scenerystack/axon";
-import { toFixed } from "scenerystack/dot";
+import { roundSymmetric, toFixed } from "scenerystack/dot";
 import { Shape } from "scenerystack/kite";
 import { LinearGradient, Node, type NodeOptions, Path, Rectangle, Text } from "scenerystack/scenery";
 import { PhetFont } from "scenerystack/scenery-phet";
@@ -74,7 +74,7 @@ export class TemperatureLegendNode extends Node {
       tickShape.moveTo(BAR_WIDTH, y).lineTo(BAR_WIDTH + 5, y);
 
       const kelvin = MIN_TEMPERATURE_K + fraction * (MAX_TEMPERATURE_K - MIN_TEMPERATURE_K);
-      const celsius = Math.round(kelvin - KELVIN_TO_CELSIUS_OFFSET);
+      const celsius = roundSymmetric(kelvin - KELVIN_TO_CELSIUS_OFFSET);
       const label = new Text(
         new PatternStringProperty(strings.getLegend().tickStringProperty, { value: toFixed(celsius, 0) }),
         {

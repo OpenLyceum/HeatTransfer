@@ -72,7 +72,7 @@ export class TransportControlPanel extends HeatTransferPanel {
     });
 
     // A number is not an interpretation. Name the regime as well as reporting it.
-    const regimeText = new DerivedProperty(
+    const regimeTextProperty = new DerivedProperty(
       [
         model.pecletNumberProperty,
         readouts.conductionDominatesStringProperty,
@@ -98,7 +98,7 @@ export class TransportControlPanel extends HeatTransferPanel {
           panelTitle(controls.transportRegimeStringProperty),
           balance.node,
           panelReadout(pecletText),
-          panelReadout(regimeText),
+          panelReadout(regimeTextProperty),
         ],
       }),
       providedOptions,

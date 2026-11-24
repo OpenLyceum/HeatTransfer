@@ -13,6 +13,7 @@
  * part, which is then substituted into a translated pattern.
  */
 
+import { roundSymmetric } from "scenerystack/dot";
 import { StringUtils } from "scenerystack/phetcommon";
 import { KELVIN_TO_CELSIUS_OFFSET } from "../../HeatTransferConstants.js";
 
@@ -23,13 +24,13 @@ export function formatCelsius(kelvin: number): string {
 
 /** Degrees Celsius, rounded to a whole number, for summaries and axis ticks. */
 export function formatCelsiusRounded(kelvin: number): string {
-  return Math.round(kelvin - KELVIN_TO_CELSIUS_OFFSET).toString();
+  return roundSymmetric(kelvin - KELVIN_TO_CELSIUS_OFFSET).toString();
 }
 
 /** Thermal conductivity in W/(m K): whole numbers for metals, decimals below 10. */
 export function formatConductivity(conductivity: number): string {
   if (conductivity >= 10) {
-    return Math.round(conductivity).toString();
+    return roundSymmetric(conductivity).toString();
   }
   if (conductivity >= 0.1) {
     return StringUtils.toFixedLTR(conductivity, 2);
@@ -64,9 +65,9 @@ export function formatPeclet(peclet: number): string {
     return StringUtils.toFixedLTR(peclet, 1);
   }
   if (peclet < 1000) {
-    return Math.round(peclet).toString();
+    return roundSymmetric(peclet).toString();
   }
-  return `${Math.round(peclet / 100) / 10}k`;
+  return `${roundSymmetric(peclet / 100) / 10}k`;
 }
 
 /** Renders an integer exponent with Unicode superscript digits. */

@@ -25,7 +25,7 @@ import { FIELD_SIMULATION_SETTINGS } from "../../HeatTransferConstants.js";
  */
 
 import { BooleanProperty, DerivedProperty, NumberProperty, Property, type TReadOnlyProperty } from "scenerystack/axon";
-import { Vector2, Vector2Property } from "scenerystack/dot";
+import { roundSymmetric, Vector2, Vector2Property } from "scenerystack/dot";
 import type { TModel } from "scenerystack/joist";
 import { TimeSpeed } from "scenerystack/scenery-phet";
 import type { ResolutionPresetId } from "../../HeatTransferConstants.js";
@@ -380,7 +380,7 @@ export class FieldSimulationModel implements TModel {
 
     // Scale the substep budget by how long the frame actually was, so the
     // simulation runs at the same rate on a 30 Hz display as on a 120 Hz one.
-    const budget = Math.round(
+    const budget = roundSymmetric(
       SUBSTEPS_PER_FRAME * speedFactor * clamped * FIELD_SIMULATION_SETTINGS.REFERENCE_FRAME_RATE,
     );
     const substeps = Math.min(

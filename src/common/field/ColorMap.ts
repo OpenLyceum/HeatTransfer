@@ -12,6 +12,7 @@
  * ordering legible when the sim is projected or viewed in greyscale.
  */
 
+import { roundSymmetric } from "scenerystack/dot";
 import HeatTransferNamespace from "../../HeatTransferNamespace.js";
 
 /** One stop on the ramp: a normalized position and an sRGB colour in [0, 1]. */
@@ -82,7 +83,7 @@ export function sampleColorMap(position: number): Rgb {
  * here chooses a colour.
  */
 export function rgbToCss(color: Rgb): string {
-  const to255 = (value: number): number => Math.round(Math.min(1, Math.max(0, value)) * 255);
+  const to255 = (value: number): number => roundSymmetric(Math.min(1, Math.max(0, value)) * 255);
   return `rgb(${to255(color.red)}, ${to255(color.green)}, ${to255(color.blue)})`;
 }
 
